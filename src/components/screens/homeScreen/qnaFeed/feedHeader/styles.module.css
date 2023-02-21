@@ -1,0 +1,28 @@
+.header{
+    background-color:#FFFDDE;
+    display: flex;
+    padding: 12px;
+    justify-content: space-between;
+    font-size: 1.4rem;
+    border: 1px solid#4a4a42;
+    /* border-radius: 5px; */
+    display: flex;
+    align-items: center;
+   position: sticky;
+   top:0px;
+   left:0px;
+   width: 100%;
+   box-sizing: border-box;
+  
+   
+}
+
+.leftHeader{
+    width: min-content;
+    display: flex;
+   flex-direction: row;
+   width: 20%;
+   gap: 12px;
+   justify-content: space-between;
+   
+}

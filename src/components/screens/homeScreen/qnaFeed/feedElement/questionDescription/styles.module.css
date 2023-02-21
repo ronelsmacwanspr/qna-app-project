@@ -1,0 +1,12 @@
+.questionDescription{
+    font-size: 1.1rem;
+    max-height: 144px;
+    width:100%;
+    overflow: hidden;
+}
+
+.line{
+    width: 100%;
+    background-color: burlywood;
+    
+}

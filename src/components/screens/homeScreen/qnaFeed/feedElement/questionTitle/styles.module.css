@@ -1,0 +1,8 @@
+.questionTitle{
+    max-height: 144px;
+    width: 100%;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
