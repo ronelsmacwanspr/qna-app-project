@@ -1,4 +1,4 @@
-import QuestionLandingPage from "@/components/screens/questionLandingPage/questionLandingPage";
+import QuestionLandingPage from "@/components/screens/questionLandingPage/QuestionLandingPage";
 export default QuestionLandingPage;
 
 

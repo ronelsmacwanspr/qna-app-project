@@ -1,12 +1,2 @@
-import Header from "./header";
-import QuestionCard from "./questionCard";
-
-export default function AskQuestionScreen(){
-    
-    return  (
-        <>
-            <Header />
-            <QuestionCard/>
-        </>
-    )
-}
+import AskQuestionScreen from "./AskQuestionScreen";
+export default AskQuestionScreen;
