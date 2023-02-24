@@ -1,22 +1,25 @@
 import styles from './styles.module.css';
+import { useEffect, useRef, useState } from 'react';
 
-const CHAR_LIMIT = 100;
+
 
 export default function QuestionCardTitle({question , setQuestion , title}){
 
-    
+
+
+    const targetRef = useRef();
     function handleChange(event){
         const text = event.target.value;
-        if(text.length > CHAR_LIMIT){
-            //show error
-            alert('Please enter atmost 100 words!');
-        } else {
+        
+        console.log("text ", text);
+
             //setQuestion
             setQuestion({...question , 
             title : text
-            })
-        }
+            });
+        
     }
+
 
     return (
         <div className={styles.titleWrapper}>
@@ -30,8 +33,9 @@ export default function QuestionCardTitle({question , setQuestion , title}){
 
             
             <textarea 
+            ref = {targetRef}
             onChange={handleChange}
-            value = {title}
+             value = {title}
             placeholder='Enter a title' className={styles.textarea} type = "text" id = "questionCardTitle" />
           
            

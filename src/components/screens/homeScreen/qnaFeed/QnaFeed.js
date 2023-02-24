@@ -17,15 +17,12 @@ export default function QnAFeed(){
   console.log("data" , data);
    console.log("user " , user );
     
-
-    let cnt = 0;
-    for(let question of data){
+    data.forEach((question , index) => {
         feed.push(
-            <FeedElement question = {question} index = {cnt} key={cnt} />
+            <FeedElement question = {question} index = {index} key={question.id} />
 
         );
-        ++cnt;
-    }
+    })
 
     return (
         <div className={styles.qnaFeedWrapper}>

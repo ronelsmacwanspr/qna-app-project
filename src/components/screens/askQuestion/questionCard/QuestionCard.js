@@ -9,6 +9,8 @@ import SubmitButton from '../../../submitButton/SubmitButton';
 import { useDataContext } from '@/context/dataContext';
 import { useUserContext } from '@/context/userContext';
 
+const TITLE_CHAR_LIMIT = 300;
+
 export default function QuestionCard(){
 
     const [question , setQuestion] = useState(new Question({}));
@@ -39,8 +41,8 @@ export default function QuestionCard(){
             alert(`Title cannot be empty!`);
             return false;
         }
-        else if( title.length>100){
-            alert(`Can't have more than 100 words for title!`); // TODO : Error Styles
+        else if( title.length>TITLE_CHAR_LIMIT){
+            alert(`Can't have more than ${TITLE_CHAR_LIMIT} words for title!`); // TODO : Error Styles
             return false;
         }
 

@@ -1,11 +1,8 @@
 .header{
     background-color:#FFFDDE;
     display: flex;
-    padding: 12px;
     justify-content: space-between;
-    font-size: 1.4rem;
     border: 1px solid#4a4a42;
-    /* border-radius: 5px; */
     display: flex;
     align-items: center;
    position: sticky;
@@ -13,8 +10,10 @@
    left:0px;
    width: 100%;
    box-sizing: border-box;
-  
-   
+  line-height: 5vh;
+  padding: 24px;
+  font-size: 1.75rem;
+  text-transform: capitalize;
 }
 
 .leftHeader{
