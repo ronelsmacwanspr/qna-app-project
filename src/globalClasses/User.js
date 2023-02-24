@@ -3,7 +3,7 @@
 export function User({id,name , from , bio}){
     
     return {
-        id : id,
+        id : id || 1,
         name : name,
         bio : (!bio ? `Be the best version of yourself` : bio),
         from : (!from ? 'Ahmedabad' : from),

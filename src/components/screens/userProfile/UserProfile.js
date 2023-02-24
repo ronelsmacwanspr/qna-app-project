@@ -1,12 +1,47 @@
-import { useUserContext } from "@/context/userContext";
+import { getLocalStorageValue , useUserLocalStorage } from "@/useLocalStorage/useUserLocalStorage";
 import UserDetail from "./userDetail";
 import Contribution from "./userDetail/contribution";
+import { useState } from "react";
 
 
 import styles from './styles.module.css';
+import { useEffect } from "react";
+import { serverRuntimeConfig } from "next.config";
+const TextInputFieldKeys = ['name' , 'from' , 'bio'];
+const LABEL = {
+    name : 'Name',
+    from : 'From',
+    bio : 'Bio'
+};
+
 
 export default function UserProfile(){
-    const [user , setUser] = useUserContext();
+    
+    const [hydrated, setHydrated] = useState(false);
+    useEffect(() => {
+        setHydrated(true);
+    }, []);
+
+    if (!hydrated) {
+        // Returns null on first render, so the client and server match
+        return null;
+    }
+
+   let user = null,render=[];
+   
+    user = JSON.parse(window.localStorage.getItem('user'));
+
+    console.log('[name] ', user);
+    for(let _key of TextInputFieldKeys){
+        render.push(
+            <UserDetail key={_key} name={LABEL[_key]} value={user[_key]} />
+        );
+    }
+
+    render.splice(1,0,<UserDetail key={"id"}
+                        name="ID" value={user.id}/>);
+   
+
 
     return(
         <main>
@@ -17,13 +52,7 @@ export default function UserProfile(){
 
             <div className={styles.userDetails}>
 
-                <UserDetail name={"Name"} value = {user.name} />
-
-                <UserDetail name = "ID" value={user.id} /> 
-
-                <UserDetail name="From" value={user.from} />
-
-                <UserDetail name = "Bio" value={user.bio} />
+                {render}
 
                 <Contribution type={"questions"} />
 

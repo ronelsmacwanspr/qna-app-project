@@ -8,7 +8,6 @@ import { Question } from '@/globalClasses/Question';
 import SubmitButton from '../../../submitButton/SubmitButton';
 import { useDataContext } from '@/context/dataContext';
 import { useUserContext } from '@/context/userContext';
-
 const TITLE_CHAR_LIMIT = 300;
 
 export default function QuestionCard(){
@@ -89,7 +88,6 @@ export default function QuestionCard(){
 
         setData((draft) => {
             draft.push(_question);
-            return draft;
         });
         
        
@@ -103,7 +101,6 @@ export default function QuestionCard(){
 
         setUser((draft) => {
             draft.questions.add(_question);
-            return draft;
         })
         return true;
 
