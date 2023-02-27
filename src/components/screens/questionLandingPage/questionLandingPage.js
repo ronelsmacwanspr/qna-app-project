@@ -4,7 +4,6 @@ import AnswerCard from "@/components/answerCard/AnswerCard";
 import { useEffect, useState } from "react";
 import styles from './styles.module.css';
 import HomeButton from "@/components/homeButton";
-import { useUserContext } from "@/context/userContext";
 
 
 export default function QuestionLandingPage(){
@@ -13,7 +12,7 @@ export default function QuestionLandingPage(){
 
     const router = useRouter();
     const [data , setData] = useDataContext();
-    const [user , setUser] = useUserContext();
+   
 
     const [qid,setQid] = useState(router.query.qid);
    

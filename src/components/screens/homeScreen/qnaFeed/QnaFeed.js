@@ -11,6 +11,7 @@ export default function QnAFeed(){
     let feed = [];
     
    const [data,setData] = useDataContext();
+   console.log("data",data);
   
    data.forEach((question , index) => {
     feed.push(

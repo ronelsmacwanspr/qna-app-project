@@ -1,4 +1,4 @@
-import { getLocalStorageValue , useUserLocalStorage } from "@/useLocalStorage/useUserLocalStorage";
+//import { getLocalStorageValue , useUserLocalStorage } from "@/useLocalStorage/useUserLocalStorage";
 import UserDetail from "./userDetail";
 import Contribution from "./userDetail/contribution";
 import { useState } from "react";
@@ -6,7 +6,10 @@ import { useState } from "react";
 
 import styles from './styles.module.css';
 import { useEffect } from "react";
-import { useUserContext } from "@/context/userContext";
+//import { useUserContext } from "@/context/userContext";
+import { getUser,updateUser } from "@/utils";
+
+
 const TextInputFieldKeys = ['name' , 'from' , 'bio'];
 const LABEL = {
     name : 'Name',
@@ -15,10 +18,15 @@ const LABEL = {
 };
 
 
+
+
 export default function UserProfile(){
     
+    // const [user , setUser] = useUserContext();
+    
+    
     const [hydrated, setHydrated] = useState(false);
-    const [user , setUser] = useUserContext();
+
     useEffect(() => {
         setHydrated(true);
     }, []);
@@ -28,12 +36,8 @@ export default function UserProfile(){
         return null;
     }
 
-//    let user = null;
-   
-//     user = JSON.parse(window.localStorage.getItem('user'));
-
-//     console.log('[name] ', user);
-
+    let user = getUser();
+    console.log('in profile page user is ', user);
      
      if(!user){
         return null;

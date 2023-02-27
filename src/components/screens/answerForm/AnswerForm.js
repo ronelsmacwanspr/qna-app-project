@@ -4,16 +4,18 @@ import { useRouter } from "next/router";
 import { useDataContext } from "@/context/dataContext";
 import styles from "./styles.module.css";
 import SubmitButton from "@/components/submitButton/SubmitButton";
-import { useUserContext } from "@/context/userContext";
+import { getUser , updateUser } from "@/utils";
+//import { useUserContext } from "@/context/userContext";
 
 
 export default function AnswerForm(){
     
     const [value,setValue] = useState(null);
     const [data , setData] = useDataContext();
-    const [user,setUser] = useUserContext();  
     const router = useRouter();
     const [qid , setQid] = useState(router.query.qid);
+   // const [user,setUser] = useUserContext();  
+   let user = getUser();
 
 
 
@@ -63,7 +65,7 @@ export default function AnswerForm(){
         }
 
 
-        const date = new Date() , day = date.getDay() , month = date.getMonth() + 1 , year = date.getFullYear();
+        const date = new Date() , day = date.getDate() , month = date.getMonth() + 1 , year = date.getFullYear();
         // push answer state in question
         const answer = new Answer({
             id : `a-${Answer.count}`,
@@ -80,9 +82,8 @@ export default function AnswerForm(){
             draft[index].answers.push(answer);
         });
 
-        setUser(draft => {
-            draft.answers.add(answer);
-        })
+        user.answers.push(answer.id);
+        updateUser(user);
 
         return true;
 

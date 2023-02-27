@@ -1,20 +1,27 @@
 import styles from './styles.module.css';
 import { useDataContext } from '@/context/dataContext';
-import { useUserContext } from '@/context/userContext';
-import { useUserLocalStorage } from '@/useLocalStorage/useUserLocalStorage';
+// import { useUserContext } from '@/context/userContext';
+// import { useUserLocalStorage } from '@/useLocalStorage/useUserLocalStorage';
 import { useEffect, useState } from 'react';
-
-
+import { getUser, updateUser } from '@/utils';
 export default function Votes({answer , index}){
  // make selected as state
     
   
 
    const [data,setData] = useDataContext();
-    const [user , setUser] = useUserContext();
+  //  const [user , setUser] = useUserContext();
 
    //const [user , setUser] = useUserLocalStorage();
 
+   let user = getUser();
+
+
+   console.log('user  in Votes ', user);
+
+   //console.log('in local storage user is ' , typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : null);
+   if( !answer) return null;
+   
    const [selected, setSelected] = useState(()=>{
 
     if(!user){
@@ -32,37 +39,22 @@ export default function Votes({answer , index}){
     
 });
 
-        const [hydrated, setHydrated] = useState(false);
-        useEffect(() => {
-            setHydrated(true);
-        }, []);
-
-        if (!hydrated) {
-            // Returns null on first render, so the client and server match
-            return null;
-        }
-
-
-    if( !answer) return null;
+   
 
    console.log('user---',user);
 
    console.log('selecetd is' , selected);
 
-
-    //let selected = null;
-     
-    // if(user.upvotedAnswers.includes(answer.id)){
-    //     selected = 'upvote';
-    // } else if(user.downvotedAnswers.includes(answer.id)){
-    //     selected = 'downvote';
-    // }
-
     let upvoteClassName = (selected == 'upvote' ? 'upvoteSelected' : 'upvote');
     let downvoteClassName = (selected == 'downvote' ? 'downvoteSelected' : 'downvote');
 
 
-        function handleUpvoteClick(){   
+
+    console.log('classNames ', upvoteClassName , downvoteClassName);
+
+        function handleUpvoteClick(){  
+            
+            user = getUser();
             if(selected == 'upvote'){
               
 
@@ -76,20 +68,14 @@ export default function Votes({answer , index}){
 
                 });
 
-                // setUser((draft) => {
-                //     draft.upvotedAnswers.delete(answer.id);
-                   
-                // })
+              
 
-                // setUser(draft=>{
-                //     draft.upvotedAnswers = draft.upvotedAnswers.filter(item => item.id!=answer.id);
-                // })
-
-                setUser(draft => {
-                    const idx = draft.upvotedAnswers.indexOf(answer.id);
+                    const idx = user.upvotedAnswers.indexOf(answer.id);
                     console.assert(idx>=0);
-                    draft.upvotedAnswers.splice(idx , 1);
-                 })
+                    user.upvotedAnswers.splice(idx , 1);
+                    updateUser(user);
+
+                
 
                 setSelected(null);
 
@@ -109,11 +95,14 @@ export default function Votes({answer , index}){
                  
                 });
 
-               // setUser(draft => {draft.upvotedAnswers.add(answer.id)});
+             
 
-                setUser(draft => {
-                    draft.upvotedAnswers.push(answer.id);
-                });
+                //user.upvotedAnswers.push(answer.id);
+                user = {
+                    ...user ,
+                    upvotedAnswers : [...user.upvotedAnswers , answer.id]
+                }
+                updateUser(user);
 
                 if(selected == 'downvote'){
                
@@ -129,19 +118,16 @@ export default function Votes({answer , index}){
                     })
     
                    
-                 
-                   //setUser(draft => {draft.downvotedAnswers.delete(answer.id)});
 
-                  // setUser(draft => {draft.downvotedAnswers = draft.downvotedAnswers.filter(item => item.id!=answer.id)})
-                   setUser(draft => {
-                    const idx = draft.downvotedAnswers.indexOf(answer.id);
-                    console.assert(idx>=0);
-                    draft.downvotedAnswers.splice(idx , 1);
-                 })
-
+                 const idx = user.downvotedAnswers.indexOf(answer.id);
+                     console.assert(idx>=0);
+                    user.downvotedAnswers.splice(idx , 1);
+                    updateUser(user);
                    
-                }
+                
 
+                
+                }
                 setSelected('upvote');
             }
 
@@ -149,6 +135,10 @@ export default function Votes({answer , index}){
         }
 
         function handleDownvoteClick(){
+
+            user = getUser();
+
+
             if(selected == 'downvote'){
           
                 setData(draft => {
@@ -161,17 +151,13 @@ export default function Votes({answer , index}){
                  
                 })
 
-                
 
-                //setUser(draft => {draft.downvotedAnswers.delete(answer.id)});
-
-              //  setUser(draft => {draft.downvotedAnswers = draft.downvotedAnswers.filter(item => item.id!=answer.id)});
-
-              setUser(draft => {
-                const idx = draft.downvotedAnswers.indexOf(answer.id);
+                const idx = user.downvotedAnswers.indexOf(answer.id);
                 console.assert(idx>=0);
-                draft.downvotedAnswers.splice(idx , 1);
-             })
+                user.downvotedAnswers.splice(idx , 1);
+                updateUser(user);
+
+
 
              setSelected(null);
             }
@@ -188,13 +174,12 @@ export default function Votes({answer , index}){
                   
                 })
 
-               
-
-               // setUser(draft => {draft.downvotedAnswers.add(answer.id)});
-
-        
-
-              setUser(draft => {draft.downvotedAnswers.push(answer.id)});
+              //user.downvotedAnswers.push(answer.id);
+              user = {
+                ...user,
+                downvotedAnswers : [...user.downvotedAnswers , answer.id]
+              }
+              updateUser(user);
 
                 if(selected == 'upvote'){
                
@@ -210,17 +195,14 @@ export default function Votes({answer , index}){
 
                 
 
-                 //  setUser(draft => {draft.upvotedAnswers.delete(answer.id)});
-
-                 //  setUser(draft => {draft.upvotedAnswers = draft.upvotedAnswers.filter(item => item.id!=answer.id)})
-
-                 setUser(draft => {
-                    const idx = draft.upvotedAnswers.indexOf(answer.id);
+                    const idx = user.upvotedAnswers.indexOf(answer.id);
                     console.assert(idx>=0);
-                    draft.upvotedAnswers.splice(idx , 1);
-                 })
+                    user.upvotedAnswers.splice(idx , 1);
+                    updateUser(user);
+
                 }
 
+               
                 setSelected('downvote');
             }
         
@@ -228,18 +210,32 @@ export default function Votes({answer , index}){
            
         }
 
+        function getButtonStyle(type){
+            if(type == 'upvote'){
+                if(selected == 'upvote'){
+                    return styles.upvoteSelected;
+                }
+                return styles.upvote;
+            }
+
+            if(selected == 'downvote'){
+                return styles.downvoteSelected;
+            }
+            return styles.downvote;
+        }
+
     
 
         return (
             <div className={styles.voteWrapper}>
-                <button className={styles[upvoteClassName]}
+                <button className={getButtonStyle('upvote')}
                 onClick = {(e)=>handleUpvoteClick(e)}
                 
                 >Upvote</button>
                 <span className={styles.count}>
                     {(answer ? answer.numUpvotes : 0)}
                 </span>
-                <button className={styles[downvoteClassName]} 
+                <button className={getButtonStyle('downvote')} 
                 onClick = {(e)=>handleDownvoteClick(e)}
                
                 >Downvote</button>
@@ -248,4 +244,6 @@ export default function Votes({answer , index}){
                 </span>
             </div>
         )
+
 }
+        

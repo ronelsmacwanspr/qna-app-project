@@ -12,6 +12,8 @@
     border : 1px solid #00425A;
     border-radius: 5px;
 }
+
+
 .downvote{
     margin-left : 12px;
    
@@ -34,15 +36,3 @@
     display: inline-block;
     margin-left: 2px;
 }
-/* .selected{
-    background-color: red;
-} */
-
-/* .upvote:hover{
-    background-color: red;
-}
-
-.downvote:hover{
-    background-color: red;
-} */
-

@@ -7,14 +7,18 @@ import {  useState } from 'react';
 import { Question } from '@/globalClasses/Question';
 import SubmitButton from '../../../submitButton/SubmitButton';
 import { useDataContext } from '@/context/dataContext';
+import { getUser,updateUser , hasUserAskedSimilar} from '@/utils';
 import { useUserContext } from '@/context/userContext';
+
+ 
 const TITLE_CHAR_LIMIT = 300;
 
 export default function QuestionCard(){
 
     const [question , setQuestion] = useState(new Question({}));
     const [data , setData] = useDataContext();
-    const [user , setUser] = useUserContext();
+    //const [user , setUser] = useUserContext();
+    let user = getUser();
 
     console.log("user IN", user);
 
@@ -34,7 +38,7 @@ export default function QuestionCard(){
         }
 
     
-        console.log("title ", title);
+      
         
         if(!title || title==='' || title.trim()==''){
             alert(`Title cannot be empty!`);
@@ -74,17 +78,12 @@ export default function QuestionCard(){
 
         // check if user has already asked exactly same ques
 
-        console.log("asked similar func is ", user.hasAskedSimilar);
-        if(user.hasAskedSimilar(_question)){
+        console.log("question ", _question);
+       
+        if(hasUserAskedSimilar(user , _question.id)){
                 alert('You have already asked the same question!');
                 return false;
         }
-
-       
-        console.log("question ", _question);
-        // setData([...data,
-        //       _question
-        // ]); // append ques
 
         // using immer
 
@@ -92,18 +91,9 @@ export default function QuestionCard(){
             draft.push(_question);
         });
         
-       
-        // const userQuestions = clone(user.questions);
-        // userQuestions.add(_question);
+        user.questions.push(_question.id);
+        updateUser(user);
 
-        // setUser({
-        //     ...user,
-        //     questions : userQuestions
-        // });
-
-        setUser((draft) => {
-            draft.questions.add(_question);
-        })
         return true;
 
     }

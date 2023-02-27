@@ -1,8 +1,9 @@
-import { useUserContext } from "@/context/userContext";
+//import { useUserContext } from "@/context/userContext";
 import { useDataContext } from "@/context/dataContext";
 import Link from "next/link";
 
 import styles from './styles.module.css';
+import { getUser , updateUser } from "@/utils";
 
 const TYPE_STYLE = {
     questions : 'Questions',
@@ -10,9 +11,14 @@ const TYPE_STYLE = {
 }
 
 export default function Contribution({type}){
-    const [user,setUser] = useUserContext();
+    //const [user,setUser] = useUserContext();
     const [data , setData] = useDataContext();
+    let user = getUser();
 
+    console.log('user in contribution is ' , user);
+    if(!user){
+        return ;
+    }
 
     const values = [];
 
@@ -52,12 +58,25 @@ export default function Contribution({type}){
     
     let i=0;
     for(const value of user[type]){
-        let str = getValue(type , value.id);
+        //value is string 'a-23' , 'q-35' etc
+        
         // console.log("value " , value);
         // console.log("str" , str);
-
-        const index = (type == 'questions' ? Number(value.id.slice(2)) : Number(value.questionId.slice(2)));
+        
+        let index = Number(value.slice(2));
+        
+        if(type == 'answers'){
+            for(const question of data){
+                for(const answer of question.answers){
+                    if(answer.id == value){
+                        index = Number(question.id.slice(2));
+                        break;
+                    }
+                }
+            }
+        }
         const qid = `q-${index}`;
+        let str = getValue(type , value);
 
 
         

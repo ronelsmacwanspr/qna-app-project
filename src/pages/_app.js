@@ -1,13 +1,13 @@
 import { DataProvider } from "@/context/dataContext";
-import { UserProvider } from "@/context/userContext";
+//import { UserProvider } from "@/context/userContext";
 import "../styles/globals.css";
 import { enableMapSet } from "immer";
 import Head from "next/head";
+import { useEffect, useState } from "react";
 
 export default function App({ Component, pageProps }) {
   
   enableMapSet();
-
   
   return (
     <>
@@ -16,9 +16,9 @@ export default function App({ Component, pageProps }) {
    
     </Head>
     <DataProvider>
-      <UserProvider>
+      {/* <UserProvider> */}
         <Component {...pageProps}/>
-      </UserProvider>
+      {/* </UserProvider> */}
     </DataProvider>
     </>
     

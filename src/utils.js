@@ -180,6 +180,60 @@ function generateText(targetRef , description){
 }
 
 
-export {generateAnswers , generateQuestions , getTruncatedText , generateText, currentUser};
+
+const getUser = () =>{
+    if(typeof window === 'undefined') return null;
+    return JSON.parse(localStorage.getItem('user'));
+}
+
+const updateUser = (_user) => {
+    console.log('setting new user as : ', _user);
+    if(typeof window !== 'undefined') {
+        const str = JSON.stringify(_user);
+        localStorage.setItem('user' , str);
+    } else {
+        console.log(" missed an update!!!" );
+    }
+}
+
+const COMPARE_EQUAL_KEYS = [
+    'userId', 'title','description'
+];
+
+
+const checkQuestionSimilarity = (question1 , questionId) => {
+
+    // let similar = true;
+    // for(let key of COMPARE_EQUAL_KEYS){
+    //     if(question1[key]!=question2[key]){
+    //         similar = false;
+    //         break;
+    //     }
+    // }
+
+    // return similar;
+
+    /*
+      get data here and compute stuff
+    */
+   
+}
+
+const hasUserAskedSimilar = (user , question)=>{
+    let hasAsked = false;
+    for(const questionId of user.questions){
+        if(checkQuestionSimilarity(question , questionId)){
+            hasAsked = true;
+            break;
+        }
+    }
+
+    return hasAsked;
+}
+
+
+export {generateAnswers , generateQuestions , getTruncatedText , generateText, currentUser , getUser , updateUser , 
+checkQuestionSimilarity , hasUserAskedSimilar
+};
 
 

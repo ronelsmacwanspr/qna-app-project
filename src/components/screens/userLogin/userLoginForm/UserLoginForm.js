@@ -3,8 +3,8 @@ import { User } from "@/globalClasses/User";
 import { TextInputField } from "./textInputField/";
 import styles from './styles.module.css';
 import SubmitButton from "@/components/submitButton";
-import { getLocalStorageValue , useUserLocalStorage } from "@/useLocalStorage/useUserLocalStorage";
-import { useUserContext } from "@/context/userContext";
+//import { getLocalStorageValue , useUserLocalStorage } from "@/useLocalStorage/useUserLocalStorage";
+//import { useUserContext } from "@/context/userContext";
 
 const TextInputFieldKeys = ['name' , 'from' , 'bio'];
 const LABEL = {
@@ -21,8 +21,10 @@ const PLACEHOLDER = {
 const UserLoginForm = () => {
     const [tempUser , setTempUser] = useImmer(new User({}));
    // const [user , setUser] = useUserLocalStorage();
-   const [user , setUser] = useUserContext();
-    
+  // const [user , setUser] = useUserContext();
+
+  let user = null;
+   console.log("window type is ", typeof window);  
     console.log("user ", user);
 
     const removeExtraSpaces = (str) => {
@@ -55,9 +57,9 @@ const UserLoginForm = () => {
        }
 
       const _user = new User({name : name, from : from , bio : bio});
-       setUser(_user);
+    //    setUser(_user);
      //  if(typeof window !== 'undefined')
-       //     window.localStorage.setItem('user' , JSON.stringify(_user));
+            window.localStorage.setItem('user' , JSON.stringify(_user));
 
 
       return true;

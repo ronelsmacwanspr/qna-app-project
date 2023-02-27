@@ -1,8 +1,8 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/router"; 
-import {  getLocalStorageValue , useUserLocalStorage } from "@/useLocalStorage/useUserLocalStorage";
-import { useUserContext } from "@/context/userContext";
+//import {  getLocalStorageValue , useUserLocalStorage } from "@/useLocalStorage/useUserLocalStorage";
+//import { useUserContext } from "@/context/userContext";
 
 export default function ScreenRedirect(){
 
@@ -11,14 +11,16 @@ export default function ScreenRedirect(){
     
   // const user = getLocalStorageValue();
   // const [user , setUser] = useUserLocalStorage();
-   const [user , setUser] = useUserContext();
+  // const [user , setUser] = useUserContext();
+
+  let user = null;
 
     useEffect(()=>{
-     
-      console.log("in index page user isa" , user);
+     user = JSON.parse(window.localStorage.getItem('user'));
+      console.log('index -> user ', user);
 
       if(router.isReady){
-        if(!user.name){
+        if(!user?.name){
           router.push('/userLogin');
         }
         else
