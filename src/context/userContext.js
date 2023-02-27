@@ -2,6 +2,9 @@ import { useState,useContext,createContext } from "react";
 import { currentUser } from "@/utils";
 import { useImmer } from "use-immer";
 
+import { useUserLocalStorage } from "@/useLocalStorage/useUserLocalStorage";
+import { User } from "@/globalClasses/User";
+
 const UserContext = createContext();
 
 export  function UserProvider({children}){
@@ -12,7 +15,8 @@ export  function UserProvider({children}){
     //      setUser
     // ];
 
-    const [user,setUser] = useImmer(currentUser);
+    //const [user,setUser] = useImmer(currentUser);
+    const [user , setUser] = useUserLocalStorage(new User({}));
 
     const UserContextValue = [
          user,

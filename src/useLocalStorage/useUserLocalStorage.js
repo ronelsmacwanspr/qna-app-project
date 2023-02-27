@@ -10,12 +10,12 @@ export const getLocalStorageValue = () => {
        
         const item = window.localStorage.getItem(KEY);
        
-        console.log("item ", item);
+      
         if(item){
             try{
                 const jsonItem = JSON.parse(item);
 
-                console.log("jsonItem ", jsonItem);
+                console.log("jsonItem in local storage ", jsonItem);
                 return jsonItem;
             }
             catch(err){
@@ -31,21 +31,40 @@ export const getLocalStorageValue = () => {
 }
 
 
-export const useUserLocalStorage = (initialValue = null) => {
-       const [user,setUser] = useImmer(() => getLocalStorageValue()|| initialValue);
 
-       
-   
+export const useUserLocalStorage = (initialValue = null) => {
+       const [user,setUser] = useImmer(() => getLocalStorageValue() || initialValue);
+
+
+    //    useEffect(()=>{
+    //         const obj = JSON.parse(window.localStorage.getItem(KEY));
+    //         if(obj){
+    //             setUser(obj);
+    //         } else {
+    //             setUser(initialValue);
+    //         }
+    //     } , [])
+
+
        useEffect(()=>{
+        console.log('updating local stor in effect');
+        console.log('user in second effect ', user);
+       
+
+        if(user){
         try{
+            if(user!=initialValue){
             const str = JSON.stringify(user);
             window.localStorage.setItem(KEY , str);
+            console.log('setted ' , KEY , str);
+            }
         } catch (err){
             console.error(err);
             console.log('Please enter valid User fields!');
         }
+            }
 
-      }, [user,  initialValue]);
+      },[user]);
 
 
       return [user,setUser];

@@ -16,9 +16,9 @@ export default function QuestionCard(){
     const [data , setData] = useDataContext();
     const [user , setUser] = useUserContext();
 
-   // console.log("user ", user);
+    console.log("user IN", user);
 
-    console.log("ques-> ",question);
+    //console.log("ques-> ",question);
 
     function handleSubmit(e){
         // run validations!
@@ -73,6 +73,8 @@ export default function QuestionCard(){
         });
 
         // check if user has already asked exactly same ques
+
+        console.log("asked similar func is ", user.hasAskedSimilar);
         if(user.hasAskedSimilar(_question)){
                 alert('You have already asked the same question!');
                 return false;

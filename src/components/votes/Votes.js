@@ -1,22 +1,62 @@
 import styles from './styles.module.css';
 import { useDataContext } from '@/context/dataContext';
 import { useUserContext } from '@/context/userContext';
+import { useUserLocalStorage } from '@/useLocalStorage/useUserLocalStorage';
+import { useEffect, useState } from 'react';
+
 
 export default function Votes({answer , index}){
+ // make selected as state
+    
+  
 
-    
-    if(!answer) return null;
-    
-    const [data,setData] = useDataContext();
+   const [data,setData] = useDataContext();
     const [user , setUser] = useUserContext();
 
-    let selected = null;
-     
-    if(user.upvotedAnswers.has(answer.id)){
-        selected = 'upvote';
-    } else if(user.downvotedAnswers.has(answer.id)){
-        selected = 'downvote';
+   //const [user , setUser] = useUserLocalStorage();
+
+   const [selected, setSelected] = useState(()=>{
+
+    if(!user){
+        return null;
     }
+
+
+    if(user.upvotedAnswers.includes(answer.id)){
+        return 'upvote';
+    }
+    else if(user.downvotedAnswers.includes(answer.id)){
+        return 'downvote';
+    } 
+     return null;
+    
+});
+
+        const [hydrated, setHydrated] = useState(false);
+        useEffect(() => {
+            setHydrated(true);
+        }, []);
+
+        if (!hydrated) {
+            // Returns null on first render, so the client and server match
+            return null;
+        }
+
+
+    if( !answer) return null;
+
+   console.log('user---',user);
+
+   console.log('selecetd is' , selected);
+
+
+    //let selected = null;
+     
+    // if(user.upvotedAnswers.includes(answer.id)){
+    //     selected = 'upvote';
+    // } else if(user.downvotedAnswers.includes(answer.id)){
+    //     selected = 'downvote';
+    // }
 
     let upvoteClassName = (selected == 'upvote' ? 'upvoteSelected' : 'upvote');
     let downvoteClassName = (selected == 'downvote' ? 'downvoteSelected' : 'downvote');
@@ -34,16 +74,29 @@ export default function Votes({answer , index}){
                             }
                 });
 
-                return draft;
                 });
 
-                setUser((draft) => {
-                    draft.upvotedAnswers.delete(answer.id);
+                // setUser((draft) => {
+                //     draft.upvotedAnswers.delete(answer.id);
                    
-                })
+                // })
+
+                // setUser(draft=>{
+                //     draft.upvotedAnswers = draft.upvotedAnswers.filter(item => item.id!=answer.id);
+                // })
+
+                setUser(draft => {
+                    const idx = draft.upvotedAnswers.indexOf(answer.id);
+                    console.assert(idx>=0);
+                    draft.upvotedAnswers.splice(idx , 1);
+                 })
+
+                setSelected(null);
+
+                
             }
             else{
-            
+                
 
                 setData((draft) => {
                        draft[index].answers.forEach((item , _index)=>{
@@ -56,7 +109,11 @@ export default function Votes({answer , index}){
                  
                 });
 
-                setUser(draft => {draft.upvotedAnswers.add(answer.id)});
+               // setUser(draft => {draft.upvotedAnswers.add(answer.id)});
+
+                setUser(draft => {
+                    draft.upvotedAnswers.push(answer.id);
+                });
 
                 if(selected == 'downvote'){
                
@@ -73,8 +130,19 @@ export default function Votes({answer , index}){
     
                    
                  
-                   setUser(draft => {draft.downvotedAnswers.delete(answer.id)});
+                   //setUser(draft => {draft.downvotedAnswers.delete(answer.id)});
+
+                  // setUser(draft => {draft.downvotedAnswers = draft.downvotedAnswers.filter(item => item.id!=answer.id)})
+                   setUser(draft => {
+                    const idx = draft.downvotedAnswers.indexOf(answer.id);
+                    console.assert(idx>=0);
+                    draft.downvotedAnswers.splice(idx , 1);
+                 })
+
+                   
                 }
+
+                setSelected('upvote');
             }
 
            
@@ -95,10 +163,20 @@ export default function Votes({answer , index}){
 
                 
 
-                setUser(draft => {draft.downvotedAnswers.delete(answer.id)});
+                //setUser(draft => {draft.downvotedAnswers.delete(answer.id)});
 
+              //  setUser(draft => {draft.downvotedAnswers = draft.downvotedAnswers.filter(item => item.id!=answer.id)});
 
-            } else {
+              setUser(draft => {
+                const idx = draft.downvotedAnswers.indexOf(answer.id);
+                console.assert(idx>=0);
+                draft.downvotedAnswers.splice(idx , 1);
+             })
+
+             setSelected(null);
+            }
+
+                else {
             
                 setData(draft => {
                     draft[index].answers.forEach((item , _index)=>{
@@ -112,7 +190,11 @@ export default function Votes({answer , index}){
 
                
 
-                setUser(draft => {draft.downvotedAnswers.add(answer.id)});
+               // setUser(draft => {draft.downvotedAnswers.add(answer.id)});
+
+        
+
+              setUser(draft => {draft.downvotedAnswers.push(answer.id)});
 
                 if(selected == 'upvote'){
                
@@ -128,9 +210,20 @@ export default function Votes({answer , index}){
 
                 
 
-                   setUser(draft => {draft.upvotedAnswers.delete(answer.id)});
+                 //  setUser(draft => {draft.upvotedAnswers.delete(answer.id)});
+
+                 //  setUser(draft => {draft.upvotedAnswers = draft.upvotedAnswers.filter(item => item.id!=answer.id)})
+
+                 setUser(draft => {
+                    const idx = draft.upvotedAnswers.indexOf(answer.id);
+                    console.assert(idx>=0);
+                    draft.upvotedAnswers.splice(idx , 1);
+                 })
                 }
+
+                setSelected('downvote');
             }
+        
 
            
         }

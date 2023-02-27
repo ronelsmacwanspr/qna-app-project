@@ -6,7 +6,7 @@ import { useState } from "react";
 
 import styles from './styles.module.css';
 import { useEffect } from "react";
-import { serverRuntimeConfig } from "next.config";
+import { useUserContext } from "@/context/userContext";
 const TextInputFieldKeys = ['name' , 'from' , 'bio'];
 const LABEL = {
     name : 'Name',
@@ -18,6 +18,7 @@ const LABEL = {
 export default function UserProfile(){
     
     const [hydrated, setHydrated] = useState(false);
+    const [user , setUser] = useUserContext();
     useEffect(() => {
         setHydrated(true);
     }, []);
@@ -27,11 +28,18 @@ export default function UserProfile(){
         return null;
     }
 
-   let user = null,render=[];
+//    let user = null;
    
-    user = JSON.parse(window.localStorage.getItem('user'));
+//     user = JSON.parse(window.localStorage.getItem('user'));
 
-    console.log('[name] ', user);
+//     console.log('[name] ', user);
+
+     
+     if(!user){
+        return null;
+     }
+
+     let render = [];
     for(let _key of TextInputFieldKeys){
         render.push(
             <UserDetail key={_key} name={LABEL[_key]} value={user[_key]} />
