@@ -1,9 +1,10 @@
-//import { useUserContext } from "@/context/userContext";
-import { useDataContext } from "@/context/dataContext";
+import { useLocalStorage } from "@/useLocalStorage/localStorage";
 import Link from "next/link";
 
 import styles from './styles.module.css';
 import { getUser , updateUser } from "@/utils";
+import { STATE_KEYS } from "@/constants";
+import { dummyQuestions } from "@/data";
 
 const TYPE_STYLE = {
     questions : 'Questions',
@@ -11,12 +12,11 @@ const TYPE_STYLE = {
 }
 
 export default function Contribution({type}){
-    //const [user,setUser] = useUserContext();
-    const [data , setData] = useDataContext();
+    const [data , setData] = useLocalStorage(STATE_KEYS.data , dummyQuestions);
     let user = getUser();
 
     console.log('user in contribution is ' , user);
-    if(!user){
+    if(!user || !data){
         return ;
     }
 
@@ -61,18 +61,22 @@ export default function Contribution({type}){
         //value is string 'a-23' , 'q-35' etc
         
         // console.log("value " , value);
-        // console.log("str" , str);
+        
         
         let index = Number(value.slice(2));
         
         if(type == 'answers'){
+            let found = false;
             for(const question of data){
                 for(const answer of question.answers){
                     if(answer.id == value){
                         index = Number(question.id.slice(2));
+                        found = true;
                         break;
                     }
                 }
+
+                if(found) break;
             }
         }
         const qid = `q-${index}`;

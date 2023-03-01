@@ -1,7 +1,7 @@
 import Votes from "../votes";
 import styles from './styles.module.css';
 
-export default function AnswerCard({answer , index}){
+export default function AnswerCard({answer , answerIndex, index , data , setData}){
         return(
             <div className={styles.answerCardWrapper}>
                 
@@ -11,7 +11,7 @@ export default function AnswerCard({answer , index}){
                     </div>
               
                 
-                <Votes answer={answer} index = {index} />
+                <Votes answer={answer} answerIndex = {answerIndex} index = {index} data = {data} setData={setData}/>
 
                 </div>
                 

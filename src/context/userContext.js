@@ -8,14 +8,7 @@ import { User } from "@/globalClasses/User";
 const UserContext = createContext();
 
 export  function UserProvider({children}){
-    // const [user,setUser] = useState(currentUser);
-
-    // const UserContextValue = [
-    //      user,
-    //      setUser
-    // ];
-
-    //const [user,setUser] = useImmer(currentUser);
+    
     const [user , setUser] = useUserLocalStorage(new User({}));
 
     const UserContextValue = [

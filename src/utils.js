@@ -1,6 +1,7 @@
 import { Question } from "./globalClasses/Question";
 import { Answer } from "./globalClasses/Answer";
 import { User } from "./globalClasses/User";
+import { COMPARE_EQUAL_KEYS } from "./constants";
 
 // will generate dummy data to feed.
 
@@ -196,44 +197,26 @@ const updateUser = (_user) => {
     }
 }
 
-const COMPARE_EQUAL_KEYS = [
-    'userId', 'title','description'
-];
 
-
-const checkQuestionSimilarity = (question1 , questionId) => {
-
-    // let similar = true;
-    // for(let key of COMPARE_EQUAL_KEYS){
-    //     if(question1[key]!=question2[key]){
-    //         similar = false;
-    //         break;
-    //     }
-    // }
-
-    // return similar;
-
-    /*
-      get data here and compute stuff
-    */
-   
-}
-
-const hasUserAskedSimilar = (user , question)=>{
-    let hasAsked = false;
-    for(const questionId of user.questions){
-        if(checkQuestionSimilarity(question , questionId)){
-            hasAsked = true;
+const getNewAnswerId = (data) => {
+    let index = data.length-1;
+    let ID = 0;
+    while(index>=0){
+        const numAnswers = data[index].answers.length;
+        if(numAnswers> 0){
+            
+            const lastAnswer = data[index].answers[numAnswers-1];
+            ID = Number(lastAnswer.id.slice(2)) + 1;
             break;
-        }
-    }
 
-    return hasAsked;
+        }
+        --index;
+    }
+    return `a-${ID}`;
 }
 
 
-export {generateAnswers , generateQuestions , getTruncatedText , generateText, currentUser , getUser , updateUser , 
-checkQuestionSimilarity , hasUserAskedSimilar
+export {generateAnswers , generateQuestions , getTruncatedText , generateText, currentUser , getUser , updateUser , getNewAnswerId
 };
 
 

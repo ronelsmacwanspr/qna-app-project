@@ -3,8 +3,6 @@ import { User } from "@/globalClasses/User";
 import { TextInputField } from "./textInputField/";
 import styles from './styles.module.css';
 import SubmitButton from "@/components/submitButton";
-//import { getLocalStorageValue , useUserLocalStorage } from "@/useLocalStorage/useUserLocalStorage";
-//import { useUserContext } from "@/context/userContext";
 
 const TextInputFieldKeys = ['name' , 'from' , 'bio'];
 const LABEL = {
@@ -20,8 +18,6 @@ const PLACEHOLDER = {
 
 const UserLoginForm = () => {
     const [tempUser , setTempUser] = useImmer(new User({}));
-   // const [user , setUser] = useUserLocalStorage();
-  // const [user , setUser] = useUserContext();
 
   let user = null;
    console.log("window type is ", typeof window);  
@@ -57,8 +53,6 @@ const UserLoginForm = () => {
        }
 
       const _user = new User({name : name, from : from , bio : bio});
-    //    setUser(_user);
-     //  if(typeof window !== 'undefined')
             window.localStorage.setItem('user' , JSON.stringify(_user));
 
 

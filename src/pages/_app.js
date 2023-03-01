@@ -1,9 +1,6 @@
-import { DataProvider } from "@/context/dataContext";
-//import { UserProvider } from "@/context/userContext";
 import "../styles/globals.css";
 import { enableMapSet } from "immer";
 import Head from "next/head";
-import { useEffect, useState } from "react";
 
 export default function App({ Component, pageProps }) {
   
@@ -15,11 +12,7 @@ export default function App({ Component, pageProps }) {
     <title>QnA App</title>
    
     </Head>
-    <DataProvider>
-      {/* <UserProvider> */}
         <Component {...pageProps}/>
-      {/* </UserProvider> */}
-    </DataProvider>
     </>
     
   )

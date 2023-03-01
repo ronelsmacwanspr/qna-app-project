@@ -1,17 +1,18 @@
 import { useRouter } from "next/router";
-import { useDataContext } from "@/context/dataContext";
+import { useLocalStorage } from "@/useLocalStorage/localStorage";
 import AnswerCard from "@/components/answerCard/AnswerCard";
 import { useEffect, useState } from "react";
 import styles from './styles.module.css';
 import HomeButton from "@/components/homeButton";
-
+import { STATE_KEYS } from "@/constants";
+import { dummyQuestions } from "@/data";
 
 export default function QuestionLandingPage(){
 
 
 
     const router = useRouter();
-    const [data , setData] = useDataContext();
+    const [data , setData] = useLocalStorage(STATE_KEYS.data , dummyQuestions);
    
 
     const [qid,setQid] = useState(router.query.qid);
@@ -29,10 +30,8 @@ export default function QuestionLandingPage(){
 
     } , [router.isReady]);
 
-    // create seperate ques des..
 
-
-   if(qid){
+   if(qid && data){
         if(qid.length < 3 || qid[0]!='q' || qid[1]!='-'){
             inValid = true;
         }
@@ -50,9 +49,9 @@ export default function QuestionLandingPage(){
             
             questionDescription = question.description;
    
-             answersToDisplay = question.answers.map( answer => (
+             answersToDisplay = question.answers.map( (answer , answerIndex) => (
                 <div key = {answer.id}>
-                      <AnswerCard answer={answer} index = {index} />
+                      <AnswerCard answer={answer} answerIndex = {answerIndex} index = {index} data = {data} setData = {setData}/>
                  </div>
                             ));
             

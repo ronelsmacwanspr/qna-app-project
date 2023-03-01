@@ -35,17 +35,6 @@ export const getLocalStorageValue = () => {
 export const useUserLocalStorage = (initialValue = null) => {
        const [user,setUser] = useImmer(() => getLocalStorageValue() || initialValue);
 
-
-    //    useEffect(()=>{
-    //         const obj = JSON.parse(window.localStorage.getItem(KEY));
-    //         if(obj){
-    //             setUser(obj);
-    //         } else {
-    //             setUser(initialValue);
-    //         }
-    //     } , [])
-
-
        useEffect(()=>{
         console.log('updating local stor in effect');
         console.log('user in second effect ', user);

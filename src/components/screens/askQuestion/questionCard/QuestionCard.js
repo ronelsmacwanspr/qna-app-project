@@ -6,23 +6,18 @@ import QuestionCardCategories from './categories';
 import {  useState } from 'react';
 import { Question } from '@/globalClasses/Question';
 import SubmitButton from '../../../submitButton/SubmitButton';
-import { useDataContext } from '@/context/dataContext';
+import { useLocalStorage } from '@/useLocalStorage/localStorage';
 import { getUser,updateUser , hasUserAskedSimilar} from '@/utils';
-import { useUserContext } from '@/context/userContext';
-
+import { STATE_KEYS } from '@/constants';
+import { dummyQuestions } from '@/data';
  
 const TITLE_CHAR_LIMIT = 300;
 
 export default function QuestionCard(){
 
     const [question , setQuestion] = useState(new Question({}));
-    const [data , setData] = useDataContext();
-    //const [user , setUser] = useUserContext();
-    let user = getUser();
-
-    console.log("user IN", user);
-
-    //console.log("ques-> ",question);
+    const [data , setData] = useLocalStorage(STATE_KEYS.data , dummyQuestions);
+    const user = getUser();
 
     function handleSubmit(e){
         // run validations!
@@ -79,12 +74,6 @@ export default function QuestionCard(){
         // check if user has already asked exactly same ques
 
         console.log("question ", _question);
-       
-        if(hasUserAskedSimilar(user , _question.id)){
-                alert('You have already asked the same question!');
-                return false;
-        }
-
         // using immer
 
         setData((draft) => {

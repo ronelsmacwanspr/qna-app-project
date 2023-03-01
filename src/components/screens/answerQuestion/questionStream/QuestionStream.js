@@ -1,10 +1,10 @@
-import { useDataContext } from "@/context/dataContext";
-
+import { useLocalStorage } from "@/useLocalStorage/localStorage";
 import QuestionTitle from "../../homeScreen/qnaFeed/feedElement/questionTitle";
 import QuestionDescription from "../../homeScreen/qnaFeed/feedElement/questionDescription";
 import AddAnswerButton from "./addAnswerButton";
 import Link from "next/link";
-
+import { STATE_KEYS } from "@/constants";
+import { dummyQuestions } from "@/data";
 import styles from './styles.module.css';
 
 const RESIZE_TIME_LIMIT = {
@@ -13,7 +13,11 @@ const RESIZE_TIME_LIMIT = {
 }
 
 export default function QuestionStream(){
-    const [data , setData] =useDataContext();
+    const [data , setData] = useLocalStorage(STATE_KEYS.data , dummyQuestions);
+
+    if(!data){
+        return null;
+    }
 
     let render = [];
 

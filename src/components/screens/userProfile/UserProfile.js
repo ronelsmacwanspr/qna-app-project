@@ -1,4 +1,3 @@
-//import { getLocalStorageValue , useUserLocalStorage } from "@/useLocalStorage/useUserLocalStorage";
 import UserDetail from "./userDetail";
 import Contribution from "./userDetail/contribution";
 import { useState } from "react";
@@ -6,8 +5,7 @@ import { useState } from "react";
 
 import styles from './styles.module.css';
 import { useEffect } from "react";
-//import { useUserContext } from "@/context/userContext";
-import { getUser,updateUser } from "@/utils";
+import { getUser } from "@/utils";
 
 
 const TextInputFieldKeys = ['name' , 'from' , 'bio'];
@@ -21,8 +19,6 @@ const LABEL = {
 
 
 export default function UserProfile(){
-    
-    // const [user , setUser] = useUserContext();
     
     
     const [hydrated, setHydrated] = useState(false);

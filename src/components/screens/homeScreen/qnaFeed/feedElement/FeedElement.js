@@ -11,11 +11,11 @@ const RESIZE_TIME_LIMIT = {
     answerDescription : 150
 };
 
-export default function FeedElement({question , index}){
+export default function FeedElement({question , index , data , setData}){
     
    
     const answerDescription = (question.answers.length == 0 ? null : question.answers[0].description);
-    const answer = (question.answers.length == 0 ? null : question.answers[0]);
+    const answer = (question.answers.length == 0 ? null : question.answers[0]) , answerIndex = (answer ? 0 : null);
     const questionDescription = (!question.description ? null : question.description);
 
 
@@ -34,7 +34,7 @@ export default function FeedElement({question , index}){
         <AnswerDescription answerDescription={answerDescription}
                             limit = {RESIZE_TIME_LIMIT.answerDescription}
                             />
-        <Votes answer = {answer} index = {index}/>
+        <Votes answer = {answer} answerIndex={answerIndex} index = {index} data = {data} setData = {setData}/>
 
         </div>
         
