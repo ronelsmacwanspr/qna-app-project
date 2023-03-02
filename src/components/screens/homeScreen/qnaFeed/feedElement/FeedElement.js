@@ -4,6 +4,8 @@ import QuestionDescription from './questionDescription';
 import  AnswerDescription  from './answerDescription';
 import Votes from '../../../../votes';
 import Link from 'next/link'; 
+import React from 'react';
+
 
 const RESIZE_TIME_LIMIT = {
     questionTitle : 150,
@@ -11,7 +13,7 @@ const RESIZE_TIME_LIMIT = {
     answerDescription : 150
 };
 
-export default function FeedElement({question , index , data , setData}){
+ function FeedElement({question , index , setData}){
     
    
     const answerDescription = (question.answers.length == 0 ? null : question.answers[0].description);
@@ -34,9 +36,11 @@ export default function FeedElement({question , index , data , setData}){
         <AnswerDescription answerDescription={answerDescription}
                             limit = {RESIZE_TIME_LIMIT.answerDescription}
                             />
-        <Votes answer = {answer} answerIndex={answerIndex} index = {index} data = {data} setData = {setData}/>
+        <Votes  answer = {answer} answerIndex={answerIndex} index = {index} setData = {setData}/>
 
         </div>
         
     )
 }
+
+export default React.memo(FeedElement);

@@ -49,11 +49,12 @@ export default function QuestionLandingPage(){
             
             questionDescription = question.description;
    
-             answersToDisplay = question.answers.map( (answer , answerIndex) => (
-                <div key = {answer.id}>
-                      <AnswerCard answer={answer} answerIndex = {answerIndex} index = {index} data = {data} setData = {setData}/>
-                 </div>
-                            ));
+             data[index].answers.forEach( (answer , answerIndex) => {
+                answersToDisplay.push(
+               
+                      <AnswerCard key = {answer.id} answer={answer} answerIndex = {answerIndex} 
+                      index = {index} setData = {setData}/>)
+                    });
             
          } else {
             inValid = true;

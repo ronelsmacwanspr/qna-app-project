@@ -1,12 +1,9 @@
 import styles from './styles.module.css';
-import { useLocalStorage } from '@/useLocalStorage/localStorage';
 import {  useState } from 'react';
 import { getUser, updateUser } from '@/utils';
-import { STATE_KEYS } from '@/constants';
-import { dummyQuestions } from '@/data';
 
 
-export default function Votes({answer , answerIndex ,index, data , setData}){
+export default function Votes({   answer , answerIndex ,index , setData}){
  // make selected as state
     
   
@@ -15,7 +12,7 @@ export default function Votes({answer , answerIndex ,index, data , setData}){
    let user = getUser();
 
 
-   console.log('user  in Votes ', user);
+   //console.log('user  in Votes ', user);
 
    //console.log('in local storage user is ' , typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : null);
    
@@ -39,14 +36,14 @@ export default function Votes({answer , answerIndex ,index, data , setData}){
 
    
 
-   console.log('data-->',data);
+ //  console.log('data-->',data);
    console.log('user-->',user);
 
-   if(!data || !answer){
+   if(!answer){
     return null;
    }
 
-   console.log('selecetd is' , selected);
+  // console.log('selecetd is' , selected);
 
 
 
@@ -55,8 +52,8 @@ export default function Votes({answer , answerIndex ,index, data , setData}){
 
     console.log('answerIndex ', answerIndex);
     console.log('index ', index);
-    const upvoteCount = (answerIndex!==null ? data[index].answers[answerIndex].numUpvotes : 0) , 
-          downvoteCount = (answerIndex!==null ? data[index].answers[answerIndex].numDownvotes : 0);
+    const upvoteCount = (answerIndex!==null ? answer.numUpvotes : 0) , 
+          downvoteCount = (answerIndex!==null ? answer.numDownvotes : 0);
 
     console.log('classNames ', upvoteClassName , downvoteClassName);
 

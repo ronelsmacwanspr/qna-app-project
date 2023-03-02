@@ -21,7 +21,7 @@ export default function QnAFeed(){
   
    data.forEach((question , index) => {
     feed.push(
-        <FeedElement question = {question} index = {index} key={question.id} data={data} setData = {setData}/>
+        <FeedElement question = {question} index = {index} key={question.id} setData = {setData}/>
 
     );
 })

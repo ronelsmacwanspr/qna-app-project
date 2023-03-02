@@ -1,7 +1,8 @@
 import Votes from "../votes";
 import styles from './styles.module.css';
-
-export default function AnswerCard({answer , answerIndex, index , data , setData}){
+import React from 'react';
+ function AnswerCard({question, answer , answerIndex, index , setData}){
+       console.log("question ", question);
         return(
             <div className={styles.answerCardWrapper}>
                 
@@ -11,10 +12,12 @@ export default function AnswerCard({answer , answerIndex, index , data , setData
                     </div>
               
                 
-                <Votes answer={answer} answerIndex = {answerIndex} index = {index} data = {data} setData={setData}/>
+                <Votes  answer={answer} answerIndex = {answerIndex} index = {index} setData={setData}/>
 
                 </div>
                 
             </div>
         );
 }
+
+export default React.memo(AnswerCard);

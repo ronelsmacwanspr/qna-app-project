@@ -19,6 +19,8 @@ export default function QuestionCard(){
     const [data , setData] = useLocalStorage(STATE_KEYS.data , dummyQuestions);
     const user = getUser();
 
+    console.log('data ',data);
+
     function handleSubmit(e){
         // run validations!
         
