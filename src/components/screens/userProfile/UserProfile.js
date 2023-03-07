@@ -7,15 +7,7 @@ import styles from './styles.module.css';
 import { useEffect } from "react";
 import { getUser } from "@/utils";
 
-
-const TextInputFieldKeys = ['name' , 'from' , 'bio'];
-const LABEL = {
-    name : 'Name',
-    from : 'From',
-    bio : 'Bio'
-};
-
-
+import { USER_PROFILE_FIELDS , UserKeys} from "@/constants";
 
 
 export default function UserProfile(){
@@ -40,14 +32,14 @@ export default function UserProfile(){
      }
 
      let render = [];
-    for(let _key of TextInputFieldKeys){
+    for(let _key of USER_PROFILE_FIELDS.inputKeys){
         render.push(
-            <UserDetail key={_key} name={LABEL[_key]} value={user[_key]} />
+            <UserDetail key={_key} name={USER_PROFILE_FIELDS.keysLabel[_key]} value={user[_key]} />
         );
     }
 
-    render.splice(1,0,<UserDetail key={"id"}
-                        name="ID" value={user.id}/>);
+    render.splice(1,0,<UserDetail key={UserKeys.id}
+                        name={USER_PROFILE_FIELDS.keysLabel[UserKeys.id]} value={user.id}/>);
    
 
 
@@ -62,9 +54,9 @@ export default function UserProfile(){
 
                 {render}
 
-                <Contribution type={"questions"} />
+                <Contribution type={UserKeys.questions} />
 
-                <Contribution type={"answers"} />
+                <Contribution type={UserKeys.answers} />
                 
             </div>
 

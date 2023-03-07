@@ -27,15 +27,13 @@ const RESIZE_TIME_LIMIT = {
        
         <div className={styles.feedElement}>
         <Link href = {location}>
-        <QuestionTitle questionTitle={question.title}   limit = {RESIZE_TIME_LIMIT.questionTitle}/>
+        <QuestionTitle questionTitle={question.title}/>
         </Link>
 
         <QuestionDescription questionDescription={questionDescription} 
-         limit={RESIZE_TIME_LIMIT.questionDescription}/>
+         />
 
-        <AnswerDescription answerDescription={answerDescription}
-                            limit = {RESIZE_TIME_LIMIT.answerDescription}
-                            />
+        <AnswerDescription answerDescription={answerDescription}/>
         <Votes  answer = {answer} answerIndex={answerIndex} index = {index} setData = {setData}/>
 
         </div>

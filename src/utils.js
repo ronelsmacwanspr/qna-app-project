@@ -206,9 +206,7 @@ const getNewAnswerId = (data) => {
         if(numAnswers> 0){
             
             const lastAnswer = data[index].answers[numAnswers-1];
-            ID = Number(lastAnswer.id.slice(2)) + 1;
-            break;
-
+            ID = Math.max(Number(lastAnswer.id.slice(2)) + 1 , ID);
         }
         --index;
     }

@@ -2,14 +2,10 @@ import { useLocalStorage } from "@/useLocalStorage/localStorage";
 import Link from "next/link";
 
 import styles from './styles.module.css';
-import { getUser , updateUser } from "@/utils";
-import { STATE_KEYS } from "@/constants";
+import { getUser } from "@/utils";
+import { STATE_KEYS , UserKeys , USER_PROFILE_FIELDS} from "@/constants";
 import { dummyQuestions } from "@/data";
 
-const TYPE_STYLE = {
-    questions : 'Questions',
-    answers   : 'Answers',
-}
 
 export default function Contribution({type}){
     const [data , setData] = useLocalStorage(STATE_KEYS.data , dummyQuestions);
@@ -26,7 +22,7 @@ export default function Contribution({type}){
     function getValue(query , id){
 
         let result = null;
-        if(query == 'questions'){
+        if(query == UserKeys.questions){
             for(const question of data){
                 if(question.id == id){
                     result = question.title;
@@ -34,7 +30,7 @@ export default function Contribution({type}){
                 }
             }
         } else {
-            console.assert(query == 'answers');
+            console.assert(query == UserKeys.answers);
         
             for(const question of data){
                 for(const answer of question.answers){
@@ -65,7 +61,7 @@ export default function Contribution({type}){
         
         let index = Number(value.slice(2));
         
-        if(type == 'answers'){
+        if(type == UserKeys.answers){
             let found = false;
             for(const question of data){
                 for(const answer of question.answers){
@@ -107,10 +103,10 @@ export default function Contribution({type}){
     return (
         <div className={styles.wrapper}>
             <div className={styles.type}>
-               <i>{TYPE_STYLE[type]}</i> 
+               <i>{USER_PROFILE_FIELDS.keysLabel[type]}</i> 
             </div>
             <div className={styles.values}>
-                {values.length == 0 ? <span>No {TYPE_STYLE[type]} yet</span> : values}
+                {values.length == 0 ? <span>No {USER_PROFILE_FIELDS.keysLabel[type]} yet</span> : values}
             </div>
         </div>
     );

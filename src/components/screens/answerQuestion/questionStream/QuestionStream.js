@@ -32,8 +32,8 @@ export default function QuestionStream(){
            
             <div key = {question.id} className = {styles.streamCard}>
                 <div className={styles.left}>
-                <QuestionTitle questionTitle = {question.title}  limit = {RESIZE_TIME_LIMIT.questionTitle}/>
-                <QuestionDescription questionDescription = {question.description} limit = {RESIZE_TIME_LIMIT.questionDescription}/>
+                <QuestionTitle questionTitle = {question.title} />
+                <QuestionDescription questionDescription = {question.description}/>
 
                 <Link href={questionPageUrl}>
                 <span>

@@ -1,7 +1,7 @@
 import styles from './styles.module.css';
 import {  useState } from 'react';
 import { getUser, updateUser } from '@/utils';
-
+import { VOTE_ACTIONS as actions } from '@/constants';
 
 export default function Votes({   answer , answerIndex ,index , setData}){
  // make selected as state
@@ -25,10 +25,10 @@ export default function Votes({   answer , answerIndex ,index , setData}){
 
 
     if(user.upvotedAnswers.includes(answer?.id)){
-        return 'upvote';
+        return actions.upvote;
     }
     else if(user.downvotedAnswers.includes(answer?.id)){
-        return 'downvote';
+        return actions.downvote;
     } 
      return null;
     
@@ -47,8 +47,8 @@ export default function Votes({   answer , answerIndex ,index , setData}){
 
 
 
-    let upvoteClassName = (selected == 'upvote' ? 'upvoteSelected' : 'upvote');
-    let downvoteClassName = (selected == 'downvote' ? 'downvoteSelected' : 'downvote');
+    let upvoteClassName = (selected == actions.upvote ? 'upvoteSelected' : 'upvote');
+    let downvoteClassName = (selected == actions.downvote ? 'downvoteSelected' : 'downvote');
 
     console.log('answerIndex ', answerIndex);
     console.log('index ', index);
@@ -60,7 +60,7 @@ export default function Votes({   answer , answerIndex ,index , setData}){
         function handleUpvoteClick(){  
             
             user = getUser();
-            if(selected == 'upvote'){
+            if(selected == actions.upvote){
               
 
                     setData(draft => {
@@ -92,7 +92,7 @@ export default function Votes({   answer , answerIndex ,index , setData}){
                 }
                 updateUser(user);
 
-                if(selected == 'downvote'){
+                if(selected == actions.downvote){
                
                     setData(draft => {
                         draft[index].answers[answerIndex].numDownvotes--;
@@ -109,7 +109,7 @@ export default function Votes({   answer , answerIndex ,index , setData}){
 
                 
                 }
-                setSelected('upvote');
+                setSelected(actions.upvote);
             }
 
            
@@ -120,7 +120,7 @@ export default function Votes({   answer , answerIndex ,index , setData}){
             user = getUser();
 
 
-            if(selected == 'downvote'){
+            if(selected == actions.downvote){
     
                 setData(draft => {
                     draft[index].answers[answerIndex].numDownvotes--;
@@ -150,7 +150,7 @@ export default function Votes({   answer , answerIndex ,index , setData}){
               }
               updateUser(user);
 
-                if(selected == 'upvote'){
+                if(selected == actions.upvote){
                
                     setData(draft => {
                         draft[index].answers[answerIndex].numUpvotes--;
@@ -166,7 +166,7 @@ export default function Votes({   answer , answerIndex ,index , setData}){
                 }
 
                
-                setSelected('downvote');
+                setSelected(actions.downvote);
             }
         
 
@@ -174,14 +174,14 @@ export default function Votes({   answer , answerIndex ,index , setData}){
         }
 
         function getButtonStyle(type){
-            if(type == 'upvote'){
-                if(selected == 'upvote'){
+            if(type == actions.upvote){
+                if(selected == type){
                     return styles.upvoteSelected;
                 }
                 return styles.upvote;
             }
 
-            if(selected == 'downvote'){
+            if(selected == actions.downvote){
                 return styles.downvoteSelected;
             }
             return styles.downvote;
@@ -191,14 +191,14 @@ export default function Votes({   answer , answerIndex ,index , setData}){
 
         return (
             <div className={styles.voteWrapper}>
-                <button className={getButtonStyle('upvote')}
+                <button className={getButtonStyle(actions.upvote)}
                 onClick = {(e)=>handleUpvoteClick(e)}
                 
                 >Upvote</button>
                 <span className={styles.count}>
                     {upvoteCount}
                 </span>
-                <button className={getButtonStyle('downvote')} 
+                <button className={getButtonStyle(actions.downvote)} 
                 onClick = {(e)=>handleDownvoteClick(e)}
                
                 >Downvote</button>

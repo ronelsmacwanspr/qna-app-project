@@ -1,6 +1,6 @@
 import styles from './styles.module.css';
 
-export default function QuestionDescription({questionDescription , limit}){
+export default function QuestionDescription({questionDescription}){
 
 
     return (

@@ -4,12 +4,14 @@ import { TextInputField } from "./textInputField/";
 import styles from './styles.module.css';
 import SubmitButton from "@/components/submitButton";
 
-const TextInputFieldKeys = ['name' , 'from' , 'bio'];
-const LABEL = {
-    name : 'Name',
-    from : 'From',
-    bio : 'Bio'
-};
+import { USER_PROFILE_FIELDS } from "@/constants";
+
+// const TextInputFieldKeys = ['name' , 'from' , 'bio'];
+// const LABEL = {
+//     name : 'Name',
+//     from : 'From',
+//     bio : 'Bio'
+// };
 const PLACEHOLDER = {
     name : 'Please Enter your name',
     from : 'Where are you from?',
@@ -68,12 +70,12 @@ const UserLoginForm = () => {
     }
 
     let render = [];
-    for(const _key of TextInputFieldKeys){
+    for(const _key of USER_PROFILE_FIELDS.inputKeys){
         render.push(
             <TextInputField 
             key = {_key}
             _key={_key}
-            label = {LABEL[_key]}
+            label = {USER_PROFILE_FIELDS.keysLabel[_key]}
             placeholder = {PLACEHOLDER[_key]}
             handleChange = {handleChange}
             />
