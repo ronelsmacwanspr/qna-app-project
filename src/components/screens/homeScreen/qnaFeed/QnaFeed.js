@@ -4,7 +4,7 @@
 
 import FeedElement from "./feedElement";
 import styles from './styles.module.css';
-import { useLocalStorage } from "@/useLocalStorage/localStorage";
+import { useLocalStorage } from "@/localStorage/localStorage";
 import { STATE_KEYS } from "@/constants";
 import { dummyQuestions } from "@/data";
 

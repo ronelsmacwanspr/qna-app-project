@@ -1,4 +1,4 @@
-import { useLocalStorage } from "@/useLocalStorage/localStorage";
+import { useLocalStorage } from "@/localStorage/localStorage";
 import Link from "next/link";
 
 import styles from './styles.module.css';
@@ -84,7 +84,7 @@ export default function Contribution({type}){
             str = ', ' + str;
         }
         values.push(
-            <Link href={{pathname : '/q/[qid]' , query : {qid : qid}}}>
+            <Link key={value} href={{pathname : '/q/[qid]' , query : {qid : qid}}}>
             <span className={styles.span}>
                 
                 {str}

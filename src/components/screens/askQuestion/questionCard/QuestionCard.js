@@ -6,7 +6,7 @@ import QuestionCardCategories from './categories';
 import {  useState } from 'react';
 import { Question } from '@/globalClasses/Question';
 import SubmitButton from '../../../submitButton/SubmitButton';
-import { useLocalStorage } from '@/useLocalStorage/localStorage';
+import { useLocalStorage } from '@/localStorage/localStorage';
 import { getUser,updateUser , hasUserAskedSimilar} from '@/utils';
 import { STATE_KEYS } from '@/constants';
 import { dummyQuestions } from '@/data';

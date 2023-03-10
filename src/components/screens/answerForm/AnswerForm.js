@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import styles from "./styles.module.css";
 import SubmitButton from "@/components/submitButton/SubmitButton";
 import { getUser , updateUser , getNewAnswerId } from "@/utils";
-import { useLocalStorage } from "@/useLocalStorage/localStorage";
+import { useLocalStorage } from "@/localStorage/localStorage";
 import { STATE_KEYS } from "@/constants";
 import { dummyQuestions } from "@/data";
 

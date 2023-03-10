@@ -1,7 +1,7 @@
 import { createContext , useContext , useState } from "react";
 import { dummyQuestions } from "@/data";
 import {useImmer} from 'use-immer';
-import { useLocalStorage } from "@/useLocalStorage/localStorage";
+import { useLocalStorage } from "@/localStorage/localStorage";
 
 const DataContext = createContext();
 

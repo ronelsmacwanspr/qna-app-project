@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect,useMemo } from "react";
 import { useImmer } from "use-immer";
 
 const getFromLocalStorage = (key , deserializer)=>{
@@ -11,7 +11,7 @@ const getFromLocalStorage = (key , deserializer)=>{
         console.error(err);
         return null;
     }
-}
+} 
 
 const setInLocalStorage = (key , value , serializer) => {
     try{
@@ -22,7 +22,7 @@ const setInLocalStorage = (key , value , serializer) => {
     }
 }
 const useLocalStorage = (key , initialValue = null , serializer = JSON.stringify, deserializer = JSON.parse) => {
-    const [state , setState] = useImmer(null);
+    const [state , setState] = (useImmer(null));
 
     useEffect(()=>{
         const value = getFromLocalStorage(key , deserializer);
@@ -38,13 +38,15 @@ const useLocalStorage = (key , initialValue = null , serializer = JSON.stringify
     } , [key]);
 
     useEffect(()=>{
-        console.log('setting in effect-2 local storage as',state );
         if(state){
+            console.log('setting in effect-2 local storage as',state );
             setInLocalStorage(key , state , serializer);
         }
     } , [key , state]);
 
-    return [state , setState];
+    const value = useMemo(()=>[state, setState] , [state]);
+
+    return value;
 }
 
 export {useLocalStorage , setInLocalStorage , getFromLocalStorage};

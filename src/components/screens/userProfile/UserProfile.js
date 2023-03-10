@@ -44,6 +44,7 @@ export default function UserProfile(){
 
 
     return(
+     
         <main>
         <div className={styles.wrapper}>
             
@@ -62,6 +63,7 @@ export default function UserProfile(){
 
         </div>
         </main>
+      
     )
     
 }

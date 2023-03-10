@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useLocalStorage } from "@/useLocalStorage/localStorage";
+import { useLocalStorage } from "@/localStorage/localStorage";
 import AnswerCard from "@/components/answerCard/AnswerCard";
 import { useEffect, useState } from "react";
 import styles from './styles.module.css';
@@ -15,11 +15,12 @@ export default function QuestionLandingPage(){
     const [data , setData] = useLocalStorage(STATE_KEYS.data , dummyQuestions);
    
 
-    const [qid,setQid] = useState(router.query.qid);
+ const [qid,setQid] = useState(router?.query?.qid);
    
     let  index= null , question = null , answersToDisplay = [] , questionTitle = 'Wait..', questionDescription = 'Wait...',
          inValid = false;
 
+     console.log("ready-router", router.isReady);
 
     useEffect(()=>{
         if(router.isReady){
@@ -29,8 +30,7 @@ export default function QuestionLandingPage(){
         }
 
     } , [router.isReady]);
-
-
+   
    if(qid && data){
         if(qid.length < 3 || qid[0]!='q' || qid[1]!='-'){
             inValid = true;
