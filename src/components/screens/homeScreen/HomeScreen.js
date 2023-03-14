@@ -25,7 +25,7 @@ export default function HomeScreen() {
   //    }
   //  } , [router.isReady]);
 
-   if(!data) return null;
+   if(!data || !user) return null;
 
 
   return (
