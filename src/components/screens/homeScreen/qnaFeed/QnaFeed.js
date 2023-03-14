@@ -25,9 +25,7 @@ export default function QnAFeed() {
     feed.push(
       <FeedElement
         question={question}
-        index={index}
         key={question.id}
-        setData={setData}
       />
     );
   });

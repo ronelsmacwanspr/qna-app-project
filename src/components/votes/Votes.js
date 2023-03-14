@@ -11,6 +11,8 @@ export default function Votes({   answer , setAnswers}){
   
    let user = getUser();
 
+   if(!answer) return null;
+
 
    //console.log('user  in Votes ', user);
 

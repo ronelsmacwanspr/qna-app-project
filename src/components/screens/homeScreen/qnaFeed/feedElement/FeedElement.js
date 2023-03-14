@@ -8,9 +8,10 @@ import React from 'react';
 import { dummyAnswers } from '@/data';
 import { getAnswerWithId } from '@/utils';
 import { useLocalStorage } from '@/localStorage/localStorage';
+import { STATE_KEYS } from '@/constants';
 
 
-function FeedElement({question , index , setData}){
+function FeedElement({question}){
     
     const [answers , setAnswers] = useLocalStorage(STATE_KEYS.answers, dummyAnswers);
    

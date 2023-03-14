@@ -204,6 +204,9 @@ const getNewAnswerId = (answers) => {
 }
 
 const getAnswerWithId = (answers , id) => {
+    if(!answers){
+        return null;
+    }
     const _id = Number(id.slice(2));
 
     if(answers.length <= _id){
