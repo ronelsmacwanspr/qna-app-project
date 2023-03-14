@@ -33,9 +33,9 @@ export default function Contribution({type}){
             console.assert(query == UserKeys.answers);
         
             for(const question of data){
-                for(const answer of question.answers){
-                    if(answer.id == id){
-                        result = answer.description;
+                for(const _answer of question.answers){
+                    if(_answer.id == id){
+                        result = _answer.description;
                         break;
                     }
                 }
@@ -64,8 +64,8 @@ export default function Contribution({type}){
         if(type == UserKeys.answers){
             let found = false;
             for(const question of data){
-                for(const answer of question.answers){
-                    if(answer.id == value){
+                for(const _answer of question.answers){
+                    if(_answer.id == value){
                         index = Number(question.id.slice(2));
                         found = true;
                         break;

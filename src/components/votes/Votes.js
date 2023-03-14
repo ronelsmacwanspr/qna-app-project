@@ -1,9 +1,9 @@
 import styles from './styles.module.css';
 import {  useState } from 'react';
-import { getUser, updateUser } from '@/utils';
+import { getAnswerWithId, getUser, updateUser } from '@/utils';
 import { VOTE_ACTIONS as actions } from '@/constants';
 
-export default function Votes({   answer , answerIndex ,index , setData}){
+export default function Votes({   answer , setAnswers}){
  // make selected as state
     
   
@@ -24,10 +24,10 @@ export default function Votes({   answer , answerIndex ,index , setData}){
     }
 
 
-    if(user.upvotedAnswers.includes(answer?.id)){
+    if(user.upvotedAnswers.includes(answer.id)){
         return actions.upvote;
     }
-    else if(user.downvotedAnswers.includes(answer?.id)){
+    else if(user.downvotedAnswers.includes(answer.id)){
         return actions.downvote;
     } 
      return null;
@@ -50,10 +50,9 @@ export default function Votes({   answer , answerIndex ,index , setData}){
     let upvoteClassName = (selected == actions.upvote ? 'upvoteSelected' : 'upvote');
     let downvoteClassName = (selected == actions.downvote ? 'downvoteSelected' : 'downvote');
 
-    console.log('answerIndex ', answerIndex);
-    console.log('index ', index);
-    const upvoteCount = (answerIndex!==null ? answer.numUpvotes : 0) , 
-          downvoteCount = (answerIndex!==null ? answer.numDownvotes : 0);
+
+    const upvoteCount = (answer ? answer.numUpvotes : 0) , 
+          downvoteCount = (answer ? answer.numDownvotes : 0);
 
     console.log('classNames ', upvoteClassName , downvoteClassName);
 
@@ -63,9 +62,14 @@ export default function Votes({   answer , answerIndex ,index , setData}){
             if(selected == actions.upvote){
               
 
-                    setData(draft => {
-                        draft[index].answers[answerIndex].numUpvotes--;
-                    });
+                    // setData(draft => {
+                    //     draft[index].answers[answerIndex].numUpvotes--;
+                    // });
+
+                    setAnswers((draft)=>{
+                        const __answer = getAnswerWithId(draft , answer.id);
+                        __answer.numUpvotes--;
+                    })
               
 
                     const idx = user.upvotedAnswers.indexOf(answer.id);
@@ -82,8 +86,14 @@ export default function Votes({   answer , answerIndex ,index , setData}){
             else{
                 
 
-                setData(draft => {
-                    draft[index].answers[answerIndex].numUpvotes++;
+                // setData(draft => {
+                //     draft[index].answers[answerIndex].numUpvotes++;
+                // })
+
+                setAnswers(draft=>{
+                    const __answer = getAnswerWithId(draft , answer.id);
+                    __answer.numUpvotes++;
+
                 })
 
                 user = {
@@ -94,8 +104,13 @@ export default function Votes({   answer , answerIndex ,index , setData}){
 
                 if(selected == actions.downvote){
                
-                    setData(draft => {
-                        draft[index].answers[answerIndex].numDownvotes--;
+                    // setData(draft => {
+                    //     draft[index].answers[answerIndex].numDownvotes--;
+                    // })
+
+                    setAnswers(draft=>{
+                        const __answer = getAnswerWithId(draft , answer.id);
+                        __answer.numDownvotes--;
                     })
     
                    
@@ -122,8 +137,13 @@ export default function Votes({   answer , answerIndex ,index , setData}){
 
             if(selected == actions.downvote){
     
-                setData(draft => {
-                    draft[index].answers[answerIndex].numDownvotes--;
+                // setData(draft => {
+                //     draft[index].answers[answerIndex].numDownvotes--;
+                // })
+
+                setAnswers(draft => {
+                    const __answer = getAnswerWithId(draft , answer.id);
+                    __answer.numDownvotes--;
                 })
 
 
@@ -139,8 +159,13 @@ export default function Votes({   answer , answerIndex ,index , setData}){
 
                 else {
             
-                setData(draft => {
-                    draft[index].answers[answerIndex].numDownvotes++;
+                // setData(draft => {
+                //     draft[index].answers[answerIndex].numDownvotes++;
+                // })
+
+                setAnswers(draft => {
+                    const __answer = getAnswerWithId(draft , answer.id);
+                    __answer.numDownvotes++;
                 })
 
               //user.downvotedAnswers.push(answer.id);
@@ -152,8 +177,13 @@ export default function Votes({   answer , answerIndex ,index , setData}){
 
                 if(selected == actions.upvote){
                
-                    setData(draft => {
-                        draft[index].answers[answerIndex].numUpvotes--;
+                    // setData(draft => {
+                    //     draft[index].answers[answerIndex].numUpvotes--;
+                    // })
+
+                    setAnswers(draft => {
+                        const __answer = getAnswerWithId(draft , answer.id);
+                        __answer.numUpvotes--;
                     })
 
                 

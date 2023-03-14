@@ -22,7 +22,7 @@ const setInLocalStorage = (key , value , serializer) => {
     }
 }
 const useLocalStorage = (key , initialValue = null , serializer = JSON.stringify, deserializer = JSON.parse) => {
-    const [state , setState] = (useImmer(null));
+    const [state , setState] = useImmer(null);
 
     useEffect(()=>{
         const value = getFromLocalStorage(key , deserializer);

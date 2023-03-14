@@ -3,7 +3,7 @@ const COMPARE_EQUAL_KEYS = [
 ];
 
 export function Question( {id,userId,datePosted,categories,title,description,
-    answers} ){
+    answers} = {}){
         const obj = {
         id : id,
         userId : userId,

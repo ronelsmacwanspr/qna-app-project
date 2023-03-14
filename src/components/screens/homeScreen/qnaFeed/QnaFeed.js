@@ -1,35 +1,36 @@
 // this file will render feedElements in flexbox
 
-
-
 import FeedElement from "./feedElement";
-import styles from './styles.module.css';
+import styles from "./styles.module.css";
 import { useLocalStorage } from "@/localStorage/localStorage";
 import { STATE_KEYS } from "@/constants";
-import { dummyQuestions } from "@/data";
+import {  dummyQuestions } from "@/data";
 
-export default function QnAFeed(){
-    let feed = [];
-    
-   const [data,setData] = useLocalStorage(STATE_KEYS.data , dummyQuestions);
+export default function QnAFeed() {
+  let feed = [];
 
-   console.log("data",data);
-
-   if(!data){
-    return null;
-   }
+  const [data, setData] = useLocalStorage(STATE_KEYS.data, dummyQuestions);
   
-   data.forEach((question , index) => {
+  if (!data) {
+    return null;
+  }
+
+  console.log("data", data);
+
+  if (!data) {
+    return null;
+  }
+
+  data.forEach((question, index) => {
     feed.push(
-        <FeedElement question = {question} index = {index} key={question.id} setData = {setData}/>
-
+      <FeedElement
+        question={question}
+        index={index}
+        key={question.id}
+        setData={setData}
+      />
     );
-})
-   
-    return (
-        <div className={styles.qnaFeedWrapper}>
-            {feed}
-        </div>
-    )
+  });
 
+  return <div className={styles.qnaFeedWrapper}>{feed}</div>;
 }

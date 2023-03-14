@@ -1,6 +1,6 @@
 
 
-const User = function({id,name , from , bio}) {
+const User = function({id,name , from , bio} = {}) {
     
     return {
         id : id || 1,
