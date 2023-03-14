@@ -1,13 +1,11 @@
-import { DataProvider } from "@/context/dataContext";
-import { UserProvider } from "@/context/userContext";
 import "../styles/globals.css";
 import { enableMapSet } from "immer";
 import Head from "next/head";
+import { RedirectToLoginScreenIfUserAbsent } from "@/components/RedirectToLoginScreenIfUserAbsent";
 
 export default function App({ Component, pageProps }) {
   
   enableMapSet();
-
   
   return (
     <>
@@ -15,11 +13,10 @@ export default function App({ Component, pageProps }) {
     <title>QnA App</title>
    
     </Head>
-    <DataProvider>
-      <UserProvider>
-        <Component {...pageProps}/>
-      </UserProvider>
-    </DataProvider>
+          <RedirectToLoginScreenIfUserAbsent>
+          <Component {...pageProps}/>
+
+          </RedirectToLoginScreenIfUserAbsent>
     </>
     
   )

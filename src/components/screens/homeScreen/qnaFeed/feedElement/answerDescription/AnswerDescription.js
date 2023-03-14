@@ -2,7 +2,7 @@ import styles from './styles.module.css';
 import { useEffect , useState , useRef} from 'react';
 import { generateText } from '@/utils';
 
-export default function AnswerDescription({answerDescription  , limit}){
+export default function AnswerDescription({answerDescription }){
 
 
     return (

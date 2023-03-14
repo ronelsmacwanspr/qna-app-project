@@ -1,19 +1,19 @@
-import { useDataContext } from "@/context/dataContext";
-
+import { useLocalStorage } from "@/localStorage/localStorage";
 import QuestionTitle from "../../homeScreen/qnaFeed/feedElement/questionTitle";
 import QuestionDescription from "../../homeScreen/qnaFeed/feedElement/questionDescription";
 import AddAnswerButton from "./addAnswerButton";
 import Link from "next/link";
-
+import { STATE_KEYS } from "@/constants";
+import { dummyQuestions } from "@/data";
 import styles from './styles.module.css';
 
-const RESIZE_TIME_LIMIT = {
-    questionTitle : 150,
-    questionDescription : 150,
-}
 
 export default function QuestionStream(){
-    const [data , setData] =useDataContext();
+    const [data , setData] = useLocalStorage(STATE_KEYS.data , dummyQuestions);
+
+    if(!data){
+        return null;
+    }
 
     let render = [];
 
@@ -28,8 +28,8 @@ export default function QuestionStream(){
            
             <div key = {question.id} className = {styles.streamCard}>
                 <div className={styles.left}>
-                <QuestionTitle questionTitle = {question.title}  limit = {RESIZE_TIME_LIMIT.questionTitle}/>
-                <QuestionDescription questionDescription = {question.description} limit = {RESIZE_TIME_LIMIT.questionDescription}/>
+                <QuestionTitle questionTitle = {question.title} />
+                <QuestionDescription questionDescription = {question.description}/>
 
                 <Link href={questionPageUrl}>
                 <span>

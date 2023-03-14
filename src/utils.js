@@ -1,6 +1,7 @@
 import { Question } from "./globalClasses/Question";
 import { Answer } from "./globalClasses/Answer";
 import { User } from "./globalClasses/User";
+import { COMPARE_EQUAL_KEYS } from "./constants";
 
 // will generate dummy data to feed.
 
@@ -180,6 +181,40 @@ function generateText(targetRef , description){
 }
 
 
-export {generateAnswers , generateQuestions , getTruncatedText , generateText, currentUser};
+
+const getUser = () =>{
+    if(typeof window === 'undefined') return null;
+    return JSON.parse(localStorage.getItem('user'));
+}
+
+const updateUser = (_user) => {
+    console.log('setting new user as : ', _user);
+    if(typeof window !== 'undefined') {
+        const str = JSON.stringify(_user);
+        localStorage.setItem('user' , str);
+    } else {
+        console.log(" missed an update!!!" );
+    }
+}
+
+
+const getNewAnswerId = (data) => {
+    let index = data.length-1;
+    let ID = 0;
+    while(index>=0){
+        const numAnswers = data[index].answers.length;
+        if(numAnswers> 0){
+            
+            const lastAnswer = data[index].answers[numAnswers-1];
+            ID = Math.max(Number(lastAnswer.id.slice(2)) + 1 , ID);
+        }
+        --index;
+    }
+    return `a-${ID}`;
+}
+
+
+export {generateAnswers , generateQuestions , getTruncatedText , generateText, currentUser , getUser , updateUser , getNewAnswerId
+};
 
 

@@ -3,7 +3,7 @@ import styles from './styles.module.css';
 import { generateText } from '@/utils';
 import { useEffect, useState, useRef } from 'react';
 
-export default function QuestionTitle({questionTitle , limit}){
+export default function QuestionTitle({questionTitle}){
 
     return (
         <div className={styles.questionTitle}>

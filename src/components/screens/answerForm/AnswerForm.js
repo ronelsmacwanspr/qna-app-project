@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
 import { Answer } from "@/globalClasses/Answer";
 import { useRouter } from "next/router";
-import { useDataContext } from "@/context/dataContext";
-import { useUserContext } from "@/context/userContext";
 import styles from "./styles.module.css";
 import SubmitButton from "@/components/submitButton/SubmitButton";
-
+import { getUser , updateUser , getNewAnswerId } from "@/utils";
+import { useLocalStorage } from "@/localStorage/localStorage";
+import { STATE_KEYS } from "@/constants";
+import { dummyQuestions } from "@/data";
 
 export default function AnswerForm(){
     
     const [value,setValue] = useState(null);
-    const [data , setData] = useDataContext();
-    const [user,setUser] = useUserContext();  
+    const [data , setData] = useLocalStorage(STATE_KEYS.data , dummyQuestions);
     const router = useRouter();
     const [qid , setQid] = useState(router.query.qid);
+    
+   let user = getUser();
 
 
 
@@ -26,7 +28,9 @@ export default function AnswerForm(){
     } , [router.isReady]);
 
    
-
+    if(!data || !user){
+        return null;
+    }
 
 
     if(qid){
@@ -63,10 +67,11 @@ export default function AnswerForm(){
         }
 
 
-        const date = new Date() , day = date.getDay() , month = date.getMonth() + 1 , year = date.getFullYear();
+        const date = new Date() , day = date.getDate() , month = date.getMonth() + 1 , year = date.getFullYear();
         // push answer state in question
+
         const answer = new Answer({
-            id : `a-${Answer.count}`,
+            id : getNewAnswerId(data),
             questionId : qid,
             description : answerDescription,
             datePosted : `${day}/${month}/${year}`,
@@ -80,9 +85,8 @@ export default function AnswerForm(){
             draft[index].answers.push(answer);
         });
 
-        setUser(draft => {
-            draft.answers.add(answer);
-        })
+        user.answers.push(answer.id);
+        updateUser(user);
 
         return true;
 

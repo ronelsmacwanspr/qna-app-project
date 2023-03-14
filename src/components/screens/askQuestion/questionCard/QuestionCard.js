@@ -6,20 +6,20 @@ import QuestionCardCategories from './categories';
 import {  useState } from 'react';
 import { Question } from '@/globalClasses/Question';
 import SubmitButton from '../../../submitButton/SubmitButton';
-import { useDataContext } from '@/context/dataContext';
-import { useUserContext } from '@/context/userContext';
-
+import { useLocalStorage } from '@/localStorage/localStorage';
+import { getUser,updateUser , hasUserAskedSimilar} from '@/utils';
+import { STATE_KEYS } from '@/constants';
+import { dummyQuestions } from '@/data';
+ 
 const TITLE_CHAR_LIMIT = 300;
 
 export default function QuestionCard(){
 
     const [question , setQuestion] = useState(new Question({}));
-    const [data , setData] = useDataContext();
-    const [user , setUser] = useUserContext();
+    const [data , setData] = useLocalStorage(STATE_KEYS.data , dummyQuestions);
+    const user = getUser();
 
-   // console.log("user ", user);
-
-    console.log("ques-> ",question);
+    console.log('data ',data);
 
     function handleSubmit(e){
         // run validations!
@@ -35,7 +35,7 @@ export default function QuestionCard(){
         }
 
     
-        console.log("title ", title);
+      
         
         if(!title || title==='' || title.trim()==''){
             alert(`Title cannot be empty!`);
@@ -74,37 +74,17 @@ export default function QuestionCard(){
         });
 
         // check if user has already asked exactly same ques
-        if(user.hasAskedSimilar(_question)){
-                alert('You have already asked the same question!');
-                return false;
-        }
 
-       
         console.log("question ", _question);
-        // setData([...data,
-        //       _question
-        // ]); // append ques
-
         // using immer
 
         setData((draft) => {
             draft.push(_question);
-            return draft;
         });
         
-       
-        // const userQuestions = clone(user.questions);
-        // userQuestions.add(_question);
+        user.questions.push(_question.id);
+        updateUser(user);
 
-        // setUser({
-        //     ...user,
-        //     questions : userQuestions
-        // });
-
-        setUser((draft) => {
-            draft.questions.add(_question);
-            return draft;
-        })
         return true;
 
     }
