@@ -6,14 +6,22 @@ import Link from "next/link";
 import { STATE_KEYS } from "@/constants";
 import { dummyQuestions } from "@/data";
 import styles from './styles.module.css';
+import { useEffect, useState } from "react";
 
 
 export default function QuestionStream(){
     const [data , setData] = useLocalStorage(STATE_KEYS.data , dummyQuestions);
+    const [hydrated,setHydrated] = useState(false);
 
     if(!data){
         return null;
     }
+
+    useEffect(()=>{
+        setHydrated(true);
+    },[]);
+
+
 
     let render = [];
 
@@ -42,6 +50,8 @@ export default function QuestionStream(){
             </div>
         );
     }
+
+    if(!hydrated) return null;
 
     return (
         <main className={styles.main}>

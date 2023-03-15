@@ -4,28 +4,30 @@ import FeedElement from "./feedElement";
 import styles from "./styles.module.css";
 import { useLocalStorage } from "@/localStorage/localStorage";
 import { STATE_KEYS } from "@/constants";
-import {  dummyQuestions } from "@/data";
+import {  dummyAnswers, dummyQuestions } from "@/data";
+import { getAnswerWithId } from "@/utils";
 
 export default function QnAFeed() {
   let feed = [];
 
   const [data, setData] = useLocalStorage(STATE_KEYS.data, dummyQuestions);
+  const [answers,setAnswers] = useLocalStorage(STATE_KEYS.answers , dummyAnswers);
   
-  if (!data) {
+  if (!data || !answers) {
     return null;
   }
 
-  console.log("data", data);
+  console.log("data",data);
+  console.log('answers',answers);
 
-  if (!data) {
-    return null;
-  }
 
-  data.forEach((question, index) => {
+  data.forEach((question) => {
     feed.push(
       <FeedElement
         question={question}
         key={question.id}
+        answer = {question.answers.length > 0 ? getAnswerWithId(answers , question.answers[0]) : null}
+        setAnswers = {setAnswers}
       />
     );
   });

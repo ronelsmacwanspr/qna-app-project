@@ -2,25 +2,30 @@ import styles from "./styles.module.css"
 import FeedHeader from '@/components/screens/homeScreen/qnaFeed/feedHeader'
 import QnAFeed from '@/components/screens/homeScreen/qnaFeed'
 import { getUser } from "@/utils";
+import { useEffect, useState } from "react";
 
 export default function HomeScreen() {
 
-  let user = getUser();
- 
- 
-   if(!user) return null;
+  const [hydrated,setHydrated] = useState(false);
 
+   useEffect(()=>{
+    setHydrated(true);
+   },[hydrated]);
 
+   if(!hydrated) return null;
+   
   return (
-    <>
-     <main>
+    
+    <div>
       <FeedHeader />
      
+     <main>
       <div className={styles.mainFeed}>
         <QnAFeed/>
       </div>
      
       </main>
-    </>
+      </div>
+    
   )
 }

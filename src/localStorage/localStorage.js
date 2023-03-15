@@ -2,6 +2,8 @@ import { useEffect,useMemo } from "react";
 import { useImmer } from "use-immer";
 
 const getFromLocalStorage = (key , deserializer)=>{
+    if(typeof window === 'undefined') return null;
+
     let value = null;
     try{
         value = deserializer(localStorage.getItem(key));
@@ -14,6 +16,8 @@ const getFromLocalStorage = (key , deserializer)=>{
 } 
 
 const setInLocalStorage = (key , value , serializer) => {
+    if(typeof window === 'undefined') return null;
+
     try{
         const str = serializer(value);
         localStorage.setItem(key , str);
@@ -22,20 +26,13 @@ const setInLocalStorage = (key , value , serializer) => {
     }
 }
 const useLocalStorage = (key , initialValue = null , serializer = JSON.stringify, deserializer = JSON.parse) => {
-    const [state , setState] = useImmer(null);
-
-    useEffect(()=>{
-        const value = getFromLocalStorage(key , deserializer);
-       
-        console.log('value in efect 1 ', value);
-        if(!value){
-            setState(initialValue);
-        }
-        else{
-            setState(value);
-        }
-       
-    } , [key]);
+    const [state , setState] = useImmer(()=>{
+        const val = getFromLocalStorage(key , deserializer);
+        if(val){
+            return val;
+        } 
+        return initialValue;
+    });
 
     useEffect(()=>{
         if(state){

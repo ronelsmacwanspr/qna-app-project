@@ -5,25 +5,26 @@ import  AnswerDescription  from './answerDescription';
 import Votes from '../../../../votes';
 import Link from 'next/link'; 
 import React from 'react';
-import { dummyAnswers } from '@/data';
-import { getAnswerWithId } from '@/utils';
-import { useLocalStorage } from '@/localStorage/localStorage';
-import { STATE_KEYS } from '@/constants';
 
 
-function FeedElement({question}){
+
+function FeedElement({question , answer , setAnswers}){
     
-    const [answers , setAnswers] = useLocalStorage(STATE_KEYS.answers, dummyAnswers);
    
-    const answer = (question.answers.length == 0 ? null : getAnswerWithId(answers,'a-0')),
-     answerDescription = (question.answers.length == 0 ? null : answer.description),
+    if(question.answers.length){
+        console.log(question.answers[0]);
+    }
+   
+    const answerDescription = (question.answers.length == 0 ? null : answer.description),
      questionDescription = (!question.description ? null : question.description);
 
 
    
     const location = `/q/${question.id}`;
 
+   
 
+    
     return (
        
         <div className={styles.feedElement}>

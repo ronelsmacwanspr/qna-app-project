@@ -5,6 +5,8 @@ import styles from './styles.module.css';
 import SubmitButton from "@/components/submitButton";
 
 import { USER_PROFILE_FIELDS } from "@/constants";
+import { getUser,updateUser } from "@/utils";
+import { useRouter } from "next/router";
 
 // const TextInputFieldKeys = ['name' , 'from' , 'bio'];
 // const LABEL = {
@@ -20,6 +22,8 @@ const PLACEHOLDER = {
 
 const UserLoginForm = () => {
     const [tempUser , setTempUser] = useImmer(new User({}));
+
+    const router = useRouter();
 
   let user = null;
    console.log("window type is ", typeof window);  
@@ -44,6 +48,16 @@ const UserLoginForm = () => {
     }
 
     const handleSubmit = () => {
+    
+        if(getUser()){
+            alert('You are already registered!');
+            setTimeout(()=>{
+                router.push("/");
+            },1000);
+
+            
+            return false;
+        }
 
        const name = removeExtraSpaces(tempUser.name);
        const from = removeExtraSpaces(tempUser.from);
@@ -55,8 +69,7 @@ const UserLoginForm = () => {
        }
 
       const _user = new User({name : name, from : from , bio : bio});
-            window.localStorage.setItem('user' , JSON.stringify(_user));
-
+            updateUser(_user);
 
       return true;
 

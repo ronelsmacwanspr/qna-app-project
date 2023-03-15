@@ -9,7 +9,7 @@ import SubmitButton from '../../../submitButton/SubmitButton';
 import { useLocalStorage } from '@/localStorage/localStorage';
 import { getUser,updateUser} from '@/utils';
 import { STATE_KEYS } from '@/constants';
-import { dummyQuestions } from '@/data';
+import { dummyAnswers, dummyQuestions } from '@/data';
  
 const TITLE_CHAR_LIMIT = 300;
 
@@ -17,6 +17,7 @@ export default function QuestionCard(){
 
     const [question , setQuestion] = useState(new Question({}));
     const [data , setData] = useLocalStorage(STATE_KEYS.data , dummyQuestions);
+
     const user = getUser();
 
     console.log('data ',data);
@@ -80,7 +81,7 @@ export default function QuestionCard(){
         setData((draft) => {
             draft.push(_question);
         });
-        
+
         user.questions.push(_question.id);
         updateUser(user);
 

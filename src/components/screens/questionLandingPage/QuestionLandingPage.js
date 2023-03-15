@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import styles from './styles.module.css';
 import HomeButton from "@/components/homeButton";
 import { STATE_KEYS } from "@/constants";
-import { dummyQuestions } from "@/data";
+import { dummyAnswers, dummyQuestions } from "@/data";
+import { getAnswerWithId } from "@/utils";
 
 export default function QuestionLandingPage(){
 
@@ -13,11 +14,12 @@ export default function QuestionLandingPage(){
 
     const router = useRouter();
     const [data , setData] = useLocalStorage(STATE_KEYS.data , dummyQuestions);
+    const [answers , setAnswers] = useLocalStorage(STATE_KEYS.answers , dummyAnswers);
    
 
  const [qid,setQid] = useState(router?.query?.qid);
    
-    let  index= null , question = null , answersToDisplay = [] , questionTitle = 'Wait..', questionDescription = 'Wait...',
+    let  index= null , question = null , answersToDisplay = [] , questionTitle = 'Loading...', questionDescription = 'Loading...',
          inValid = false;
 
      console.log("ready-router", router.isReady);
@@ -49,11 +51,12 @@ export default function QuestionLandingPage(){
             
             questionDescription = question.description;
    
-             data[index].answers.forEach( (answer , answerIndex) => {
+             data[index].answers.forEach( (answerId) => {
+                const answer = getAnswerWithId(answers,answerId);
                 answersToDisplay.push(
                
-                      <AnswerCard key = {answer.id} answer={answer} answerIndex = {answerIndex} 
-                      index = {index} setData = {setData}/>)
+                      <AnswerCard key = {answer.id} answer={answer} 
+                      setAnswers = {setAnswers}/>)
                     });
             
          } else {

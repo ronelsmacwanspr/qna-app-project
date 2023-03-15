@@ -2,13 +2,16 @@ import { useLocalStorage } from "@/localStorage/localStorage";
 import Link from "next/link";
 
 import styles from './styles.module.css';
-import { getUser } from "@/utils";
+import { getAnswerWithId, getUser } from "@/utils";
 import { STATE_KEYS , UserKeys , USER_PROFILE_FIELDS} from "@/constants";
-import { dummyQuestions } from "@/data";
+import { dummyAnswers, dummyQuestions } from "@/data";
 
 
 export default function Contribution({type}){
     const [data , setData] = useLocalStorage(STATE_KEYS.data , dummyQuestions);
+    const[ answers , setAnswers] = useLocalStorage(STATE_KEYS.answers , dummyAnswers);
+
+
     let user = getUser();
 
     console.log('user in contribution is ' , user);
@@ -45,6 +48,9 @@ export default function Contribution({type}){
                 }
             }
 
+            const answer = getAnswerWithId(answers , id);
+            result = answer.description;
+
            
         }
 
@@ -74,6 +80,9 @@ export default function Contribution({type}){
 
                 if(found) break;
             }
+
+            const answer = getAnswerWithId(answers , value);
+            index = Number(answer.questionId.slice(2));
         }
         const qid = `q-${index}`;
         let str = getValue(type , value);

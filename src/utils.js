@@ -116,7 +116,7 @@ function generateAnswers(questions , answersArray){
     
     }
    
-    prev+=4;
+   // prev+=4;
   
     }
 }
@@ -189,7 +189,7 @@ const getUser = () =>{
 }
 
 const updateUser = (_user) => {
-    console.log('setting new user as : ', _user);
+    // console.log('setting new user as : ', _user);
     if(typeof window !== 'undefined') {
         const str = JSON.stringify(_user);
         localStorage.setItem('user' , str);
@@ -200,7 +200,7 @@ const updateUser = (_user) => {
 
 
 const getNewAnswerId = (answers) => {
-    return answers.length;
+    return `a-${answers.length}`;
 }
 
 const getAnswerWithId = (answers , id) => {
@@ -214,8 +214,8 @@ const getAnswerWithId = (answers , id) => {
     }
     
     const answer = answers[_id];
-    
-    if(answer.id !== _id){
+   
+    if(answer.id !== id){
         throw new Error('Returned answer is not as expected');
     }
 
