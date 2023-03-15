@@ -35,19 +35,6 @@ export default function Contribution({type}){
         } else {
             console.assert(query == UserKeys.answers);
         
-            for(const question of data){
-                for(const _answer of question.answers){
-                    if(_answer.id == id){
-                        result = _answer.description;
-                        break;
-                    }
-                }
-
-                if(result){
-                    break;
-                }
-            }
-
             const answer = getAnswerWithId(answers , id);
             result = answer.description;
 
@@ -69,18 +56,6 @@ export default function Contribution({type}){
         
         if(type == UserKeys.answers){
             let found = false;
-            for(const question of data){
-                for(const _answer of question.answers){
-                    if(_answer.id == value){
-                        index = Number(question.id.slice(2));
-                        found = true;
-                        break;
-                    }
-                }
-
-                if(found) break;
-            }
-
             const answer = getAnswerWithId(answers , value);
             index = Number(answer.questionId.slice(2));
         }
