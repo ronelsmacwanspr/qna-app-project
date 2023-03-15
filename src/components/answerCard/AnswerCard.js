@@ -1,8 +1,10 @@
 import Votes from "../votes";
 import styles from './styles.module.css';
 import React from 'react';
- function AnswerCard({question, answer , answerIndex, index , setData}){
-       console.log("question ", question);
+ function AnswerCard({ answer  , setAnswers}){
+      // console.log("question ", question);
+       console.assert(answer.description);
+       
         return(
             <div className={styles.answerCardWrapper}>
                 
@@ -12,7 +14,7 @@ import React from 'react';
                     </div>
               
                 
-                <Votes  answer={answer} answerIndex = {answerIndex} index = {index} setData={setData}/>
+                <Votes  answer={answer} setAnswers = {setAnswers}/>
 
                 </div>
                 

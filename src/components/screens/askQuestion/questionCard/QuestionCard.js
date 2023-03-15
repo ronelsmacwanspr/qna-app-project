@@ -7,9 +7,9 @@ import {  useState } from 'react';
 import { Question } from '@/globalClasses/Question';
 import SubmitButton from '../../../submitButton/SubmitButton';
 import { useLocalStorage } from '@/localStorage/localStorage';
-import { getUser,updateUser , hasUserAskedSimilar} from '@/utils';
+import { getUser,updateUser} from '@/utils';
 import { STATE_KEYS } from '@/constants';
-import { dummyQuestions } from '@/data';
+import { dummyAnswers, dummyQuestions } from '@/data';
  
 const TITLE_CHAR_LIMIT = 300;
 
@@ -17,6 +17,7 @@ export default function QuestionCard(){
 
     const [question , setQuestion] = useState(new Question({}));
     const [data , setData] = useLocalStorage(STATE_KEYS.data , dummyQuestions);
+
     const user = getUser();
 
     console.log('data ',data);
@@ -68,20 +69,19 @@ export default function QuestionCard(){
         const datePosted = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
         const userId = user.id;
 
-        const answers = [];
+        
         const _question = new Question({ id : id , userId : userId, datePosted : datePosted , title : title,
-            description : description, categories : categories , answers : answers
+            description : description, categories : categories , answers : []
         });
-
+        console.log('_question',_question);
         // check if user has already asked exactly same ques
 
-        console.log("question ", _question);
         // using immer
 
         setData((draft) => {
             draft.push(_question);
         });
-        
+
         user.questions.push(_question.id);
         updateUser(user);
 

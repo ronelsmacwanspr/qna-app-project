@@ -4,6 +4,7 @@ export const COMPARE_EQUAL_KEYS = [
 
 export const STATE_KEYS = {
     data : 'data',
+    answers : 'answers',
 }
 
 export const VOTE_ACTIONS = {

@@ -1,43 +1,31 @@
 import styles from "./styles.module.css"
 import FeedHeader from '@/components/screens/homeScreen/qnaFeed/feedHeader'
 import QnAFeed from '@/components/screens/homeScreen/qnaFeed'
-import { useRouter } from "next/router";
-import { useEffect } from "react";
 import { getUser } from "@/utils";
-import { useLocalStorage } from "@/localStorage/localStorage";
-import { STATE_KEYS } from "@/constants";
-import { dummyQuestions } from "@/data";
+import { useEffect, useState } from "react";
 
 export default function HomeScreen() {
 
-  let user = getUser();
- const [data , setData] = useLocalStorage(STATE_KEYS.data , dummyQuestions);
- 
-  // const router = useRouter();
+  const [hydrated,setHydrated] = useState(false);
 
-   //console.log("user " , user );
-  // console.log("data " , data);
- // console.log("ready-router", router.isReady);
+   useEffect(()=>{
+    setHydrated(true);
+   },[hydrated]);
 
-  //  useEffect(()=>{
-  //   if(!user && router.isReady){
-  //     router.push("/userLogin");
-  //    }
-  //  } , [router.isReady]);
-
-   if(!data || !user) return null;
-
-
+   if(!hydrated) return null;
+   
   return (
-    <>
-     <main>
+    
+    <div>
       <FeedHeader />
      
+     <main>
       <div className={styles.mainFeed}>
         <QnAFeed/>
       </div>
      
       </main>
-    </>
+      </div>
+    
   )
 }

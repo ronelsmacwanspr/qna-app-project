@@ -65,7 +65,7 @@ function generateQuestions(questions){
 
 
 
-function generateAnswers(questions){
+function generateAnswers(questions , answersArray){
 
     let count = 0;
     const date = new Date() , day = date.getDate() , month = date.getMonth() +1, year = date.getFullYear();
@@ -110,12 +110,13 @@ function generateAnswers(questions){
     });
 
     
-    question.answers.push(answer);
+    question.answers.push(answer.id);
+    answersArray.push(answer);
 
     
     }
    
-    prev+=4;
+   // prev+=4;
   
     }
 }
@@ -188,7 +189,7 @@ const getUser = () =>{
 }
 
 const updateUser = (_user) => {
-    console.log('setting new user as : ', _user);
+    // console.log('setting new user as : ', _user);
     if(typeof window !== 'undefined') {
         const str = JSON.stringify(_user);
         localStorage.setItem('user' , str);
@@ -198,23 +199,32 @@ const updateUser = (_user) => {
 }
 
 
-const getNewAnswerId = (data) => {
-    let index = data.length-1;
-    let ID = 0;
-    while(index>=0){
-        const numAnswers = data[index].answers.length;
-        if(numAnswers> 0){
-            
-            const lastAnswer = data[index].answers[numAnswers-1];
-            ID = Math.max(Number(lastAnswer.id.slice(2)) + 1 , ID);
-        }
-        --index;
+const getNewAnswerId = (answers) => {
+    return `a-${answers.length}`;
+}
+
+const getAnswerWithId = (answers , id) => {
+    if(!answers){
+        return null;
     }
-    return `a-${ID}`;
+    const _id = Number(id.slice(2));
+
+    if(answers.length <= _id){
+       throw new Error('Id is too big');
+    }
+    
+    const answer = answers[_id];
+   
+    if(answer.id !== id){
+        throw new Error('Returned answer is not as expected');
+    }
+
+    return answer;
 }
 
 
-export {generateAnswers , generateQuestions , getTruncatedText , generateText, currentUser , getUser , updateUser , getNewAnswerId
+export {generateAnswers , generateQuestions , getTruncatedText , generateText, currentUser , getUser , 
+    updateUser , getNewAnswerId, getAnswerWithId
 };
 
 

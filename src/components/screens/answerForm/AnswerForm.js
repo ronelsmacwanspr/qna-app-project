@@ -6,12 +6,16 @@ import SubmitButton from "@/components/submitButton/SubmitButton";
 import { getUser , updateUser , getNewAnswerId } from "@/utils";
 import { useLocalStorage } from "@/localStorage/localStorage";
 import { STATE_KEYS } from "@/constants";
-import { dummyQuestions } from "@/data";
+import { dummyAnswers, dummyQuestions } from "@/data";
 
 export default function AnswerForm(){
     
     const [value,setValue] = useState(null);
+    const [hydrated,setHydrated] = useState(false);
+
     const [data , setData] = useLocalStorage(STATE_KEYS.data , dummyQuestions);
+    const [answers , setAnswers] = useLocalStorage(STATE_KEYS.answers , dummyAnswers);
+
     const router = useRouter();
     const [qid , setQid] = useState(router.query.qid);
     
@@ -19,7 +23,7 @@ export default function AnswerForm(){
 
 
 
-    let inValid = false, questionTitle = null , questionDescription = 'Wait..' , index = 'Wait..';
+    let inValid = false, questionTitle = null , questionDescription = null , index = null;
 
     useEffect(()=>{
         if(router.isReady){
@@ -27,17 +31,16 @@ export default function AnswerForm(){
         }
     } , [router.isReady]);
 
-   
-    if(!data || !user){
-        return null;
-    }
+    useEffect(()=>{
+        setHydrated(true);
+    }, []);
 
 
     if(qid){
         if(qid.length < 3 || qid[0]!='q' || qid[1]!='-'){
             inValid = true;
         } else {
-            index = qid.slice(2);
+            index = Number(qid.slice(2));
             if(index < data.length){
                 questionTitle = data[index].title;
                 questionDescription = data[index].description;
@@ -70,8 +73,8 @@ export default function AnswerForm(){
         const date = new Date() , day = date.getDate() , month = date.getMonth() + 1 , year = date.getFullYear();
         // push answer state in question
 
-        const answer = new Answer({
-            id : getNewAnswerId(data),
+        const addAnswer = new Answer({
+            id : getNewAnswerId(answers),
             questionId : qid,
             description : answerDescription,
             datePosted : `${day}/${month}/${year}`,
@@ -79,13 +82,17 @@ export default function AnswerForm(){
             numDownvotes : 0,
         })
 
-        console.log(answer);
+        console.log(addAnswer);
 
         setData(draft => {
-            draft[index].answers.push(answer);
+            draft[index].answers.push(addAnswer.id);
         });
 
-        user.answers.push(answer.id);
+        setAnswers(draft => {
+            draft.push(addAnswer);
+        })
+
+        user.answers.push(addAnswer.id);
         updateUser(user);
 
         return true;
@@ -100,6 +107,7 @@ export default function AnswerForm(){
         )
     }
 
+    if(!hydrated) return null;
 
 
     return(

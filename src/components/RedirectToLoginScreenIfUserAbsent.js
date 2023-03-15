@@ -5,11 +5,9 @@ import { useRouter } from "next/router";
 
 export const RedirectToLoginScreenIfUserAbsent = ({children}) => {
     const router = useRouter();
-    console.log('here in redirect screen');
+    console.log('here in redirect screen user is', getUser());
     useEffect(()=>{
         const user = getUser();
-       
-        console.log('user in effect hook ',user);
         if(!user && router.isReady){
             router.push('/userLogin');
         }

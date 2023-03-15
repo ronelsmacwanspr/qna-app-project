@@ -7,22 +7,24 @@ import Link from 'next/link';
 import React from 'react';
 
 
-const RESIZE_TIME_LIMIT = {
-    questionTitle : 150,
-    questionDescription : 150,
-    answerDescription : 150
-};
 
- function FeedElement({question , index , setData}){
+function FeedElement({question , answer , setAnswers}){
     
    
-    const answerDescription = (question.answers.length == 0 ? null : question.answers[0].description);
-    const answer = (question.answers.length == 0 ? null : question.answers[0]) , answerIndex = (answer ? 0 : null);
-    const questionDescription = (!question.description ? null : question.description);
+    if(question.answers.length){
+        console.log(question.answers[0]);
+    }
+   
+    const answerDescription = (question.answers.length == 0 ? null : answer.description),
+     questionDescription = (!question.description ? null : question.description);
 
 
    
-    const location = `/q/${question.id}`
+    const location = `/q/${question.id}`;
+
+   
+
+    
     return (
        
         <div className={styles.feedElement}>
@@ -34,7 +36,7 @@ const RESIZE_TIME_LIMIT = {
          />
 
         <AnswerDescription answerDescription={answerDescription}/>
-        <Votes  answer = {answer} answerIndex={answerIndex} index = {index} setData = {setData}/>
+        <Votes  answer = {answer} setAnswers = {setAnswers}/>
 
         </div>
         

@@ -2,13 +2,16 @@ import { useLocalStorage } from "@/localStorage/localStorage";
 import Link from "next/link";
 
 import styles from './styles.module.css';
-import { getUser } from "@/utils";
+import { getAnswerWithId, getUser } from "@/utils";
 import { STATE_KEYS , UserKeys , USER_PROFILE_FIELDS} from "@/constants";
-import { dummyQuestions } from "@/data";
+import { dummyAnswers, dummyQuestions } from "@/data";
 
 
 export default function Contribution({type}){
     const [data , setData] = useLocalStorage(STATE_KEYS.data , dummyQuestions);
+    const[ answers , setAnswers] = useLocalStorage(STATE_KEYS.answers , dummyAnswers);
+
+
     let user = getUser();
 
     console.log('user in contribution is ' , user);
@@ -33,9 +36,9 @@ export default function Contribution({type}){
             console.assert(query == UserKeys.answers);
         
             for(const question of data){
-                for(const answer of question.answers){
-                    if(answer.id == id){
-                        result = answer.description;
+                for(const _answer of question.answers){
+                    if(_answer.id == id){
+                        result = _answer.description;
                         break;
                     }
                 }
@@ -44,6 +47,9 @@ export default function Contribution({type}){
                     break;
                 }
             }
+
+            const answer = getAnswerWithId(answers , id);
+            result = answer.description;
 
            
         }
@@ -64,8 +70,8 @@ export default function Contribution({type}){
         if(type == UserKeys.answers){
             let found = false;
             for(const question of data){
-                for(const answer of question.answers){
-                    if(answer.id == value){
+                for(const _answer of question.answers){
+                    if(_answer.id == value){
                         index = Number(question.id.slice(2));
                         found = true;
                         break;
@@ -74,6 +80,9 @@ export default function Contribution({type}){
 
                 if(found) break;
             }
+
+            const answer = getAnswerWithId(answers , value);
+            index = Number(answer.questionId.slice(2));
         }
         const qid = `q-${index}`;
         let str = getValue(type , value);
