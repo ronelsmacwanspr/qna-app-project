@@ -32,7 +32,7 @@ export default function AnswerForm() {
   let inValid = false,
     questionTitle = null,
     questionDescription = null,
-    index = null;
+    index: null | number = null;
 
   useEffect(() => {
     if (router.isReady) {

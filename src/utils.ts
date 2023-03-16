@@ -4,7 +4,7 @@ import { User, UserType } from "./globalClasses/User";
 
 // will generate dummy data to feed.
 
-const currentUser: UserType = new User({
+const currentUser = new User({
   id: 1,
   name: "Ronels",
   from: "Ahmedabad",
@@ -13,7 +13,7 @@ const currentUser: UserType = new User({
   answers: [],
   upvotedAnswers: [],
   downvotedAnswers: [],
-});
+}) as UserType;
 
 function generateQuestions(questions: QuestionType[]): void {
   let count = 0;

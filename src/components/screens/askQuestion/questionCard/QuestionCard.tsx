@@ -9,14 +9,14 @@ import { useLocalStorage } from "../../../../localStorage/localStorage";
 import { getUser, updateUser } from "../../../../utils";
 import { STATE_KEYS } from "../../../../constants";
 import { dummyQuestions } from "../../../../data";
+import { useImmer } from "use-immer";
 
-import { ChangeEvent } from "react";
 import { QuestionType } from "../../../../globalClasses/Question";
 
 const TITLE_CHAR_LIMIT = 300;
 
 export default function QuestionCard() {
-  const [question, setQuestion] = useState<QuestionType>(
+  const [question, setQuestion] = useImmer<QuestionType>(
     new Question({
       id: "NA",
       userId: -1,

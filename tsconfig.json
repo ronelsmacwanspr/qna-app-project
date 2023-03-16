@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
-
+    "noImplicitAny": true,
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -20,7 +20,8 @@
     "**/*.ts",
     "**/*.tsx",
     "src/pages/_document.js",
-    "src/components/screens/answerForm/AnswerForm.tsx"
+    "src/components/screens/answerForm/AnswerForm.tsx",
+    "next.config.js"
   ],
   "exclude": ["node_modules"]
 }

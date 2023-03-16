@@ -1,5 +1,3 @@
-import { immerable } from "immer";
-
 export type UserType = {
   id: number;
   name: string;
@@ -9,6 +7,7 @@ export type UserType = {
   answers: string[];
   upvotedAnswers: string[];
   downvotedAnswers: string[];
+  [index: string]: number | string | string[];
 };
 
 export class User {

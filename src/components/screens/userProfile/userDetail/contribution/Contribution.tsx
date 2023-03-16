@@ -56,7 +56,9 @@ export default function Contribution({ type }: ContributionPropsType) {
   }
 
   let i = 0;
-  for (const value of user[type]) {
+  const userVals = user[type] as string[];
+
+  for (const value of userVals) {
     //value is string 'a-23' , 'q-35' etc
 
     // console.log("value " , value);

@@ -33,7 +33,7 @@ export default function UserProfile() {
       <UserDetail
         key={_key}
         name={USER_PROFILE_FIELDS.keysLabel[_key]}
-        value={user[_key]}
+        value={user[_key] as number | string}
       />
     );
   }

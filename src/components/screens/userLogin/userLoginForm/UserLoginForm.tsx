@@ -28,7 +28,7 @@ const UserLoginForm = () => {
       answers: [],
       upvotedAnswers: [],
       downvotedAnswers: [],
-    })
+    }) as UserType
   );
 
   const router = useRouter();
@@ -73,7 +73,7 @@ const UserLoginForm = () => {
       return false;
     }
 
-    const _user: UserType = new User({
+    const _user = new User({
       id: 1,
       name: name,
       from: from,
@@ -82,7 +82,7 @@ const UserLoginForm = () => {
       questions: [],
       upvotedAnswers: [],
       downvotedAnswers: [],
-    });
+    }) as UserType;
 
     updateUser(_user);
 
