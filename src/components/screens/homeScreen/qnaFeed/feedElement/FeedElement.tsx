@@ -11,13 +11,13 @@ import { Updater } from "use-immer";
 
 type FeedElementPropsType = {
   question: QuestionType;
-  answer: AnswerType;
+  answer: AnswerType | null;
   setAnswers: Updater<AnswerType[]>;
 };
 
 function FeedElement({ question, answer, setAnswers }: FeedElementPropsType) {
   const answerDescription =
-      question.answers.length == 0 ? null : answer.description,
+      question.answers.length == 0 ? null : answer!.description,
     questionDescription = !question.description ? null : question.description;
 
   const location = `/q/${question.id}`;
@@ -27,11 +27,9 @@ function FeedElement({ question, answer, setAnswers }: FeedElementPropsType) {
       <Link href={location}>
         <QuestionTitle questionTitle={question.title} />
       </Link>
-
       <QuestionDescription questionDescription={questionDescription} />
-
       <AnswerDescription answerDescription={answerDescription} />
-      <Votes answer={answer} setAnswers={setAnswers} />
+      {answer ? <Votes answer={answer} setAnswers={setAnswers} /> : null}
     </div>
   );
 }

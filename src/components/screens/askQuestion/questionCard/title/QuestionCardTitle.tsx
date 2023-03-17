@@ -13,7 +13,7 @@ export default function QuestionCardTitle({
   setQuestion,
   title,
 }: QuestionCardTitleProps) {
-  const targetRef = useRef();
+  const targetRef = useRef(null);
 
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>): void {
     const text = event.target.value;

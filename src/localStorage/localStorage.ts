@@ -13,7 +13,7 @@ const getFromLocalStorage = <Type>(
 
   let value = null;
   try {
-    value = deserializer(localStorage.getItem(key));
+    value = deserializer(localStorage.getItem(key) as string);
     return value;
   } catch (err) {
     console.error(err);
@@ -34,11 +34,12 @@ const setInLocalStorage = <Type>(
   } catch (err) {
     console.error(err);
   }
+  return null;
 };
 
 const useLocalStorage = <Type>(
   key: string,
-  initialValue: Type = null,
+  initialValue: Type,
   serializer: serializerType<Type> = JSON.stringify,
   deserializer: deserializerType<Type> = JSON.parse
 ) => {

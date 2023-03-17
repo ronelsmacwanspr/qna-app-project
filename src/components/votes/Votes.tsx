@@ -20,7 +20,7 @@ export default function Votes({ answer, setAnswers }: VotesPropsType) {
 
   let user = getUser();
 
-  const [selected, setSelected] = useState<string>(() => {
+  const [selected, setSelected] = useState<string | null>(() => {
     if (!user || !answer) {
       return null;
     }
@@ -43,6 +43,10 @@ export default function Votes({ answer, setAnswers }: VotesPropsType) {
 
   function handleUpvoteClick(): void {
     user = getUser();
+    if (!user) {
+      throw new Error("User does not exists");
+    }
+
     if (selected == actions.upvote) {
       setAnswers((draft) => {
         const __answer = getAnswerWithId(draft, answer.id);
@@ -87,6 +91,10 @@ export default function Votes({ answer, setAnswers }: VotesPropsType) {
 
   function handleDownvoteClick(): void {
     user = getUser();
+
+    if (!user) {
+      throw new Error("User does not exists");
+    }
 
     if (selected == actions.downvote) {
       setAnswers((draft) => {
@@ -142,8 +150,6 @@ export default function Votes({ answer, setAnswers }: VotesPropsType) {
     }
     return styles.downvote;
   }
-
-  if (!answer) return null;
 
   return (
     <div className={styles.voteWrapper}>

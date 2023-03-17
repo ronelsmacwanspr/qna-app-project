@@ -14,6 +14,10 @@ export default function QuestionCardCategories({
   setQuestion,
   categories,
 }: QuestionCardCategoriesPropsType) {
+  const defaultDiv = (
+    <div className={styles.defaultDiv}>No categories selected yet.</div>
+  );
+
   function handleAddCategory(): boolean {
     let inputCategory = prompt("Please Enter a category", "");
 
@@ -38,11 +42,9 @@ export default function QuestionCardCategories({
       ...question,
       categories: categories.concat(inputCategory),
     });
-  }
 
-  const defaultDiv = (
-    <div className={styles.defaultDiv}>No categories selected yet.</div>
-  );
+    return true;
+  }
 
   let categoriesArray: JSX.Element[] = [];
   // Add categories in div

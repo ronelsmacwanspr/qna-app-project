@@ -17,7 +17,9 @@ type ContributionPropsType = {
   type: string;
 };
 
-export default function Contribution({ type }: ContributionPropsType) {
+export default function Contribution({
+  type,
+}: ContributionPropsType): JSX.Element | null {
   const [data, setData] = useLocalStorage<QuestionType[]>(
     STATE_KEYS.data,
     dummyQuestions
@@ -31,13 +33,13 @@ export default function Contribution({ type }: ContributionPropsType) {
 
   console.log("user in contribution is ", user);
   if (!user || !data) {
-    return;
+    return null;
   }
 
   const values: JSX.Element[] = [];
 
   function getValue(query: string, id: string): string {
-    let result: null | string = null;
+    let result: string = "";
     if (query == UserKeys.questions) {
       for (const question of data) {
         if (question.id == id) {

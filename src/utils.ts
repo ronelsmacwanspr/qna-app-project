@@ -161,7 +161,7 @@ function generateAnswers(
 
 const getUser = (): null | UserType => {
   if (typeof window === "undefined") return null;
-  return JSON.parse(localStorage.getItem("user"));
+  return JSON.parse(localStorage.getItem("user") as string);
 };
 
 const updateUser = (_user: UserType): void => {
@@ -180,7 +180,7 @@ const getNewAnswerId = (answers: AnswerType[]): string => {
 
 const getAnswerWithId = (answers: AnswerType[], id: string): AnswerType => {
   if (!answers) {
-    return null;
+    throw new Error("There are no answers yet!");
   }
   const _id = Number(id.slice(2));
 

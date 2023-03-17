@@ -32,11 +32,14 @@ export default function QuestionCard() {
     dummyQuestions
   );
 
-  const user = getUser();
-
   console.log("data ", data);
 
   function handleSubmit(): boolean {
+    const user = getUser();
+
+    if (!user) {
+      throw new Error("No user exists yet");
+    }
     // run validations!
 
     // Title validation

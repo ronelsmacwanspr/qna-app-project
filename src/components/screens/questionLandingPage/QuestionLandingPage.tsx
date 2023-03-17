@@ -26,7 +26,7 @@ export default function QuestionLandingPage() {
 
   let index: null | number = null,
     question: null | QuestionType = null,
-    answersToDisplay: null | JSX.Element[] = [],
+    answersToDisplay: JSX.Element[] = [],
     questionTitle: string = "Loading...",
     questionDescription: string = "Loading...",
     inValid: boolean = false;

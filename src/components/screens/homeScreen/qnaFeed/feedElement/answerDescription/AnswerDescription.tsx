@@ -1,7 +1,7 @@
 import styles from "./styles.module.css";
 
 type AnswerDescriptionPropsType = {
-  answerDescription: string;
+  answerDescription: string | null;
 };
 
 export default function AnswerDescription({

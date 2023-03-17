@@ -12,7 +12,7 @@ import { QuestionType } from "../../../globalClasses/Question";
 import { AnswerType } from "../../../globalClasses/Answer";
 
 export default function AnswerForm() {
-  const [value, setValue] = useState<string>(null);
+  const [value, setValue] = useState<string>("");
   const [hydrated, setHydrated] = useState<boolean>(false);
 
   const [data, setData] = useLocalStorage<QuestionType[]>(
@@ -59,6 +59,9 @@ export default function AnswerForm() {
   }
 
   function handleSubmit() {
+    if (!user) {
+      throw new Error("No User exisys yet");
+    }
     if (!value || value.trim() == "") {
       alert("Please enter non-empty answer!");
       return false;
@@ -88,7 +91,7 @@ export default function AnswerForm() {
       year = date.getFullYear();
     // push answer state in question
 
-    const addAnswer = new Answer({
+    const addAnswer: AnswerType = new Answer({
       id: getNewAnswerId(answers),
       userId: user.id,
       questionId: qid,
@@ -101,7 +104,7 @@ export default function AnswerForm() {
     console.log(addAnswer);
 
     setData((draft) => {
-      draft[index].answers.push(addAnswer.id);
+      draft[index as number].answers.push(addAnswer.id);
     });
 
     setAnswers((draft) => {
